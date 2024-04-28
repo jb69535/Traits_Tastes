@@ -63,3 +63,30 @@ CREATE TABLE `WinePricingVolume` (
 STEP 2.
 IMPORT the Tables into the database after running the upper code.
 (Make sure to import the tables in the order they are created.)
+
+STEP 3.
+SELECT Title, Grape, Country, Region, Appellation, Type, Style, Vintage, COUNT(*) as duplicates
+FROM WineDetails
+GROUP BY Title, Grape, Country, Region, Appellation, Type, Style, Vintage
+HAVING duplicates > 1;
+
+Run this query and check duplicates
+
+STEP 4. 
+IF there are duplicates, 
+DELETE wd, wc, wpv
+FROM WineDetails wd
+LEFT JOIN (
+    SELECT WineID
+    FROM (
+        SELECT WineID,
+               ROW_NUMBER() OVER (PARTITION BY Title, Grape, Country, Region, Appellation, Type, Style, Vintage ORDER BY WineID) AS rn
+        FROM WineDetails
+    ) AS dup
+    WHERE rn > 1
+) AS duplicates ON wd.WineID = duplicates.WineID
+LEFT JOIN WineCharacteristics wc ON wd.WineID = wc.WineID
+LEFT JOIN WinePricingVolume wpv ON wd.WineID = wpv.WineID
+WHERE duplicates.WineID IS NOT NULL;
+
+Run this query and delete them.
