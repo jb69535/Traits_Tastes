@@ -1,9 +1,11 @@
 // server.ts
 
-import express from "express";
-import { Request, Response } from "express";
-import mysql from "mysql2";
-import cors from "cors";
+// Additional imports
+import express from 'express';
+import mysql from 'mysql2';
+import { Request, Response } from 'express';
+import cors from 'cors';
+import { CountResult, WineDetails } from './types/interfaces'; // Make sure the path is correct
 
 const app = express();
 app.use(cors());
@@ -16,51 +18,60 @@ const db = mysql.createConnection({
   database: "Traits_Tastes",
 });
 
-db.connect((err) => {
+db.connect(err => {
   if (err) {
-    console.error("An error occurred while connecting to the DB");
+    console.error("An error occurred while connecting to the DB:", err);
     throw err;
   }
   console.log("Connected to database!");
 });
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello from server!" });
-});
-
-app.get("/get-data", (req, res) => {
-  db.query("SELECT * FROM WineDetails", (error, results, fields) => {
-    if (error) {
-      return res.status(500).send("Error occurred: " + error.message);
-    }
-    res.json(results);
-  });
-});
-
 app.get("/search-wines", (req: Request, res: Response) => {
   const searchTerm = req.query.search as string;
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
+  const offset = (page - 1) * limit;
+
   if (!searchTerm) {
     res.status(400).send("Search term is required");
     return;
   }
-  const query = `SELECT * FROM WineDetails WHERE 
-      Title LIKE ? OR 
-      Grape LIKE ? OR 
-      Country LIKE ? OR 
-      Region LIKE ? OR 
-      Appellation LIKE ? OR 
-      Type LIKE ? OR 
-      Style LIKE ? OR 
-      Vintage LIKE ?`;
+
   const likeTerm = `%${searchTerm}%`;
-  db.query(query, Array(8).fill(likeTerm), (error, results) => {
+  const countQuery = `SELECT COUNT(*) AS total FROM WineDetails WHERE 
+      Title LIKE ? OR Grape LIKE ? OR Country LIKE ? OR 
+      Region LIKE ? OR Appellation LIKE ? OR Type LIKE ? OR 
+      Style LIKE ? OR Vintage LIKE ?`;
+
+  db.query(countQuery, Array(8).fill(likeTerm), (error, results) => {
     if (error) {
       return res.status(500).send("Error occurred: " + error.message);
     }
-    res.json(results);
+    
+    const countResults = results as CountResult[];  // Cast to CountResult[]
+    const totalItems = countResults[0].total;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    const query = `SELECT * FROM WineDetails WHERE 
+        Title LIKE ? OR Grape LIKE ? OR Country LIKE ? OR 
+        Region LIKE ? OR Appellation LIKE ? OR Type LIKE ? OR 
+        Style LIKE ? OR Vintage LIKE ? LIMIT ? OFFSET ?`;
+
+    db.query(query, [...Array(8).fill(likeTerm), limit, offset], (error, dataResults) => {
+      if (error) {
+        return res.status(500).send("Error occurred: " + error.message);
+      }
+      res.json({
+        data: dataResults as WineDetails[],  // Cast to WineDetails[]
+        totalItems,
+        totalPages,
+        currentPage: page
+      });
+    });
   });
 });
 
 app.listen(3001, () => {
   console.log("Server running on http://localhost:3001");
 });
+

@@ -1,8 +1,6 @@
-/* searchbar.css */
-
-/* Global */
+/* Global Styles & Variables */
 :root {
-  /* Color */
+  /* Colors */
   --color-white: #ffffff;
   --color-grey-white: #f7f6ee;
   --color-light-grey: #bfbfbf;
@@ -14,89 +12,95 @@
   --color-Dark-Charcoal: #333333;
   --color-Vintage-Olive: #587d71;
   --color-black: #000000;
-  /* Font Size */
-  --font-large: 40px;
-  --font-medium: 22px;
-  --font-regular: 15px;
-  --font-small: 12px;
-  --font-micro: 10px;
-  /* Font Weight */
+  /* Font Sizes */
+  --font-large: 2.5rem;  /* Responsive font size using rem */
+  --font-medium: 1.375rem;
+  --font-regular: 0.9375rem;
+  --font-small: 0.75rem;
+  --font-micro: 0.625rem;
+  /* Font Weights */
   --weight-bold: 700;
   --weight-semi-bold: 600;
   --weight-regular: 400;
-  /* Size */
+  /* Borders and Radius */
   --size-border-radius: 4px;
-  /* Animation Duration */
+  /* Animation Speed */
   --animation-duration: 300ms;
 }
 
+/* Layout */
 .search__container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the items horizontally */
-  justify-content: center; /* Center align the items vertically in case of additional vertical space */
-  width: 100%; /* Responsive width */
-  position: relative;
+  align-items: center;
+  width: 100%;  /* Full width */
+  max-width: 800px;  /* Maximum width of the search container */
+  margin: auto;  /* Center align the container */
   padding: 20px;
   background-color: var(--color-grey-white);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds depth */
-  border-radius: var(--size-border-radius); /* Smooth edges */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--size-border-radius);
 }
 
+/* Form input and buttons */
 .searchbar__container {
   display: flex;
   width: 100%;
 }
 
-input[type="text"] {
-  padding: 8px;
-  margin-bottom: 10px;
-  width: calc(100% - 16px);
-  border: 1px solid var(--color-light-grey);
+.mainLogo {
+  width: 40%;
+  height: 40%;
+}
+
+input[type="text"], .search__button {
+  flex-grow: 1;
+  margin: 5px;
+  padding: 10px;
   border-radius: var(--size-border-radius);
-  font-size: var(--font-regular);
+}
+
+input[type="text"] {
+  flex-basis: 80%;  /* Text input takes more space */
 }
 
 .search__button {
-  height: 100%;
-  padding: 10px 20px;
+  flex-basis: 20%;  /* Button takes less space */
   background-color: var(--color-rich-Burgundy);
   color: var(--color-white);
   border: none;
-  border-radius: var(--size-border-radius);
   cursor: pointer;
-  transition: background-color var(--animation-duration) ease;
 }
 
 .search__button:hover {
   background-color: var(--color-Soft-Gold);
 }
 
+/* Dropdown */
 .dropdown {
-  position: relative;
-  top: 50px; /* Adjust this value based on the height of your input field */
+  width: 100%; /* Match width with input */
+  max-height: 200px;
+  overflow-y: auto; /* Scrollable dropdown */
+  position: relative; /* Position it below the search bar */
+  top: 100%;  /* Start right after the search bar */
   left: 0;
-  right: 0;
   background-color: var(--color-white);
-  width: 100%; /* Ensure dropdown matches the width of the search input */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: var(--size-border-radius);
-  z-index: 1000; /* Make sure it overlays other content */
-  max-height: 200px; /* Optional: Limit the dropdown height */
-  overflow-y: auto; /* Allow scrolling within the dropdown */
+  z-index: 1000;
 }
 
 .dropdown-content {
   padding: 8px;
   cursor: pointer;
   transition: background-color var(--animation-duration) ease;
-  color: var(--color-Dark-Charcoal);
 }
 
 .dropdown-content:hover {
   background-color: var(--color-Creamy-Beige);
 }
 
+/* Wine Results */
 .wine__results {
   margin-top: 20px;
   color: var(--color-Vintage-Olive);
@@ -104,16 +108,65 @@ input[type="text"] {
 
 .wine__results > div {
   padding: 10px;
-  border-bottom: 1px solid var(--color-light-grey);
+  border-bottom: 1px solid var(--color-light-grey); /* Responsive line */
 }
 
-.wine__results > div:last-child {
-  border-bottom: none;
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap; /* Wrap items in small screens */
 }
 
+.pagination button {
+  min-width: 40px; /* Minimum width to accommodate single digits */
+  padding: 5px 10px; /* Adjusted padding for better fit */
+  margin: 5px;
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+  font-size: var(--font-regular); /* Ensure font size is not too large */
+  text-align: center; /* Ensure text is centered */
+  border: none;
+  border-radius: var(--size-border-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Vertically center text */
+  justify-content: center; /* Horizontally center text */
+}
+
+.pagination button:hover {
+  background-color: var(--color-Soft-Gold);
+}
+
+.pagination button:disabled {
+  background-color: var(--color-light-grey);
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background-color: var(--color-Dark-Charcoal); /* Darker color for active page */
+  color: var(--color-white);
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
   .search__container {
-    width: 95%; /* More width on smaller screens */
     padding: 10px;
+    border-radius: 2px;
+  }
+
+  input[type="text"], .search__button {
+    padding: 8px;
+  }
+
+  .dropdown {
+    max-height: 150px;
+  }
+
+  .pagination button {
+    padding: 3px 8px; /* Smaller padding on smaller screens */
+    min-width: 30px; /* Smaller minimum width on smaller screens */
   }
 }
+
