@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     return (
         <div>
             <footer>
-                <p>&copy; 2024 Jun Beom, This is the Footer</p>
+                <p>&copy; 2024 Jun Beom, Brandon Czech, Wonjoon Hwang</p>
             </footer>
         </div>
     );

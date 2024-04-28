@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import { Wine } from "../types/wineSearch";
 import "../style/components/searchbar.css";
+import FontLogo from "../assets/FontLgoBGRemove.svg";
 
 function debounce(
   func: (...args: any[]) => void,
@@ -90,14 +91,17 @@ const Searchbar: React.FC = () => {
 
   return (
     <div className="search__container">
+      <img className="mainLogo" src={FontLogo} alt="logo" />
       <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search your Wine"
-          value={searchTerm}
-          onChange={handleInputChange}
-        />
-        <input type="submit" value="Search" className="search__button" />
+        <div className="searchbar__container">
+          <input
+            type="text"
+            placeholder="Search your Wine"
+            value={searchTerm}
+            onChange={handleInputChange}
+          />
+          <input type="submit" value="Search" className="search__button" />
+        </div>
         <div className="dropdown">
           {filteredWines.map((wine, index) => (
             <div
@@ -117,7 +121,9 @@ const Searchbar: React.FC = () => {
           <div key={index}>
             <div>{wine.Title}</div>
             <div>{wine.Grape}</div>
-            <div>{wine.Country} | {wine.Region}</div>
+            <div>
+              {wine.Country} | {wine.Region}
+            </div>
             <div>{wine.Vintage}</div>
           </div>
         ))}

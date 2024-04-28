@@ -43,6 +43,11 @@
   border-radius: var(--size-border-radius); /* Smooth edges */
 }
 
+.searchbar__container {
+  display: flex;
+  width: 100%;
+}
+
 input[type="text"] {
   padding: 8px;
   margin-bottom: 10px;
@@ -53,6 +58,7 @@ input[type="text"] {
 }
 
 .search__button {
+  height: 100%;
   padding: 10px 20px;
   background-color: var(--color-rich-Burgundy);
   color: var(--color-white);

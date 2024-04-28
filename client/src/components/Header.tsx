@@ -10,6 +10,13 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const scrollToSection = (id: string) => {
+    const section = document.querySelector(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div>
       <header>
@@ -20,21 +27,33 @@ const Header: React.FC = () => {
             </div>
           </Link>
           <ul className={`navbar__menu ${isOpen ? "open" : ""}`}>
-            <li className="navbar__menu__item" data-link="#home">
+            <li
+              className="navbar__menu__item"
+              onClick={() => scrollToSection("#home")}
+            >
               Home
             </li>
-            <li className="navbar__menu__item" data-link="#search">
+            <li
+              className="navbar__menu__item"
+              onClick={() => scrollToSection("#search")}
+            >
               Search
             </li>
-
             <li className="navbar__menu__item">
-              <Link className="mbti" to="/personality-test">MBTI</Link>
+              <Link className="mbti" to="/personality-test">
+                MBTI
+              </Link>
             </li>
-
-            <li className="navbar__menu__item" data-link="#about">
+            <li
+              className="navbar__menu__item"
+              onClick={() => scrollToSection("#about")}
+            >
               About
             </li>
-            <li className="navbar__menu__item" data-link="#contact">
+            <li
+              className="navbar__menu__item"
+              onClick={() => scrollToSection("#contact")}
+            >
               Contact
             </li>
           </ul>

@@ -30,9 +30,12 @@
   --animation-duration: 300ms;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
-  font-family:'Josefin Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .mbti {
@@ -49,12 +52,21 @@ button {
 }
 
 .headerContainer {
+  position: fixed; /* Fix the header at the top of the viewport */
+  top: 0; /* Ensure the header starts from the top */
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
-  background-color: var(--color-white); /* Light background for the header */
+  background-color: var(--color-white);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure the header is above other content */
+}
+
+.mainLogo {
+  width: 10%;
+  height: 10%;
 }
 
 .navbar__menu {
