@@ -1,0 +1,65 @@
+STEP 1.
+Copy and Paste this code into your MySQL Workbench or any other MySQL database management tool.
+
+CREATE TABLE `WineDetails` (
+  `WineID` int NOT NULL AUTO_INCREMENT,
+  `Title` varchar(255) DEFAULT NULL,
+  `Grape` varchar(100) DEFAULT NULL,
+  `SecondaryGrapeVarieties` varchar(255) DEFAULT NULL,
+  `Closure` varchar(50) DEFAULT NULL,
+  `Country` varchar(100) DEFAULT NULL,
+  `Region` varchar(100) DEFAULT NULL,
+  `Appellation` varchar(100) DEFAULT NULL,
+  `Type` varchar(50) DEFAULT NULL,
+  `Style` varchar(100) DEFAULT NULL,
+  `Vintage` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`WineID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3315 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `WineStyles` (
+  `StyleID` int NOT NULL AUTO_INCREMENT,
+  `Style` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`StyleID`),
+  UNIQUE KEY `Style` (`Style`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `WineTypes` (
+  `TypeID` int NOT NULL AUTO_INCREMENT,
+  `Type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`TypeID`),
+  UNIQUE KEY `Type` (`Type`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `WineCharacteristics` (
+  `CharacteristicsID` int NOT NULL AUTO_INCREMENT,
+  `WineID` int DEFAULT NULL,
+  `Description` text,
+  `Characteristics` text,
+  `TypeID` int DEFAULT NULL,
+  `StyleID` int DEFAULT NULL,CharacteristicsID
+  PRIMARY KEY (`CharacteristicsID`),
+  KEY `WineID` (`WineID`),
+  KEY `TypeID` (`TypeID`),
+  KEY `StyleID` (`StyleID`),
+  CONSTRAINT `winecharacteristics_ibfk_1` FOREIGN KEY (`WineID`) REFERENCES `WineDetails` (`WineID`),
+  CONSTRAINT `winecharacteristics_ibfk_2` FOREIGN KEY (`TypeID`) REFERENCES `WineTypes` (`TypeID`),
+  CONSTRAINT `winecharacteristics_ibfk_3` FOREIGN KEY (`StyleID`) REFERENCES `WineStyles` (`StyleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2539 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `WinePricingVolume` (
+  `PricingVolumeID` int NOT NULL AUTO_INCREMENT,
+  `WineID` int DEFAULT NULL,
+  `Capacity` varchar(50) DEFAULT NULL,
+  `Price` varchar(50) DEFAULT NULL,
+  `Unit` float DEFAULT NULL,
+  `ABV` varchar(50) DEFAULT NULL,
+  `Per_bottle_Case_Each` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`PricingVolumeID`),
+  KEY `WineID` (`WineID`),
+  CONSTRAINT `winepricingvolume_ibfk_1` FOREIGN KEY (`WineID`) REFERENCES `WineDetails` (`WineID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4096 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+STEP 2.
+IMPORT the Tables into the database after running the upper code.
+(Make sure to import the tables in the order they are created.)

@@ -1,1 +1,33 @@
 /* searchbar.css */
+
+/* Global */
+:root {
+    /* Color */
+    --color-white: #ffffff;
+    --color-grey-white: #f7f6ee;
+    --color-light-grey: #bfbfbf;
+    --color-grey: #949494;
+    --color-rich-Burgundy: #7b1e3a;
+    --color-light-yellow: #fffec3;
+    --color-Soft-Gold: #daa49a;
+    --color-Creamy-Beige: #ead2ac;
+    --color-Dark-Charcoal: #333333;
+    --color-Vintage-Olive: #587d71;
+    --color-black: #000000;
+    /* Font Size */
+    --font-large: 40px;
+    --font-medium: 22px;
+    --font-regular: 15px;
+    --font-small: 12px;
+    --font-micro: 10px;
+    /* Font Weight */
+    --weight-bold: 700;
+    --weight-semi-bold: 600;
+    --weight-regular: 400;
+    /* Size */
+    --size-border-radius: 4px;
+    /* Animation Duration */
+    --animation-duration: 300ms;
+  }
+  
+  

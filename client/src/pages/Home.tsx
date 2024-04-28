@@ -2,11 +2,17 @@
 // Author: Jun Beom
 
 import React from 'react';
+import '../style/pages/home.css';
+import Searchbar from '../components/Searchbar';
 
 const Home: React.FC = () => {
     return (
         <div>
-            <h1>Welcome to the Home page!</h1>
+            <section id="home" className="home">
+                <div className="home__container">
+                    <Searchbar />
+                </div>
+            </section>
         </div>
     );
 };

@@ -2,12 +2,15 @@
 // Author: Jun Beom
 
 import React from 'react';
+import '../style/components/footer.css';
 
 const Footer: React.FC = () => {
     return (
-        <footer>
-            {/* Footer content */}
-        </footer>
+        <div>
+            <footer>
+                <p>&copy; 2024 Jun Beom, This is the Footer</p>
+            </footer>
+        </div>
     );
 };
 

@@ -6,7 +6,7 @@ import React from 'react';
 const PersonalityTest: React.FC = () => {
     return (
         <div>
-            {/* Your component content goes here */}
+            <p>test page</p>
         </div>
     );
 };

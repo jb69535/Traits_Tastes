@@ -2,11 +2,12 @@
 // Author: Jun Beom
 
 import React from 'react';
+import '../style/pages/personalitytestpage.css';
 
 const PersonalityTestPage: React.FC = () => {
     return (
         <div>
-            {/* Your component content goes here */}
+            <p>mbti test</p>
         </div>
     );
 };
