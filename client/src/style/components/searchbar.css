@@ -2,32 +2,112 @@
 
 /* Global */
 :root {
-    /* Color */
-    --color-white: #ffffff;
-    --color-grey-white: #f7f6ee;
-    --color-light-grey: #bfbfbf;
-    --color-grey: #949494;
-    --color-rich-Burgundy: #7b1e3a;
-    --color-light-yellow: #fffec3;
-    --color-Soft-Gold: #daa49a;
-    --color-Creamy-Beige: #ead2ac;
-    --color-Dark-Charcoal: #333333;
-    --color-Vintage-Olive: #587d71;
-    --color-black: #000000;
-    /* Font Size */
-    --font-large: 40px;
-    --font-medium: 22px;
-    --font-regular: 15px;
-    --font-small: 12px;
-    --font-micro: 10px;
-    /* Font Weight */
-    --weight-bold: 700;
-    --weight-semi-bold: 600;
-    --weight-regular: 400;
-    /* Size */
-    --size-border-radius: 4px;
-    /* Animation Duration */
-    --animation-duration: 300ms;
+  /* Color */
+  --color-white: #ffffff;
+  --color-grey-white: #f7f6ee;
+  --color-light-grey: #bfbfbf;
+  --color-grey: #949494;
+  --color-rich-Burgundy: #7b1e3a;
+  --color-light-yellow: #fffec3;
+  --color-Soft-Gold: #daa49a;
+  --color-Creamy-Beige: #ead2ac;
+  --color-Dark-Charcoal: #333333;
+  --color-Vintage-Olive: #587d71;
+  --color-black: #000000;
+  /* Font Size */
+  --font-large: 40px;
+  --font-medium: 22px;
+  --font-regular: 15px;
+  --font-small: 12px;
+  --font-micro: 10px;
+  /* Font Weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+  /* Size */
+  --size-border-radius: 4px;
+  /* Animation Duration */
+  --animation-duration: 300ms;
+}
+
+.search__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align the items horizontally */
+  justify-content: center; /* Center align the items vertically in case of additional vertical space */
+  width: 100%; /* Responsive width */
+  position: relative;
+  padding: 20px;
+  background-color: var(--color-grey-white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds depth */
+  border-radius: var(--size-border-radius); /* Smooth edges */
+}
+
+input[type="text"] {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: calc(100% - 16px);
+  border: 1px solid var(--color-light-grey);
+  border-radius: var(--size-border-radius);
+  font-size: var(--font-regular);
+}
+
+.search__button {
+  padding: 10px 20px;
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--size-border-radius);
+  cursor: pointer;
+  transition: background-color var(--animation-duration) ease;
+}
+
+.search__button:hover {
+  background-color: var(--color-Soft-Gold);
+}
+
+.dropdown {
+  position: relative;
+  top: 50px; /* Adjust this value based on the height of your input field */
+  left: 0;
+  right: 0;
+  background-color: var(--color-white);
+  width: 100%; /* Ensure dropdown matches the width of the search input */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: var(--size-border-radius);
+  z-index: 1000; /* Make sure it overlays other content */
+  max-height: 200px; /* Optional: Limit the dropdown height */
+  overflow-y: auto; /* Allow scrolling within the dropdown */
+}
+
+.dropdown-content {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color var(--animation-duration) ease;
+  color: var(--color-Dark-Charcoal);
+}
+
+.dropdown-content:hover {
+  background-color: var(--color-Creamy-Beige);
+}
+
+.wine__results {
+  margin-top: 20px;
+  color: var(--color-Vintage-Olive);
+}
+
+.wine__results > div {
+  padding: 10px;
+  border-bottom: 1px solid var(--color-light-grey);
+}
+
+.wine__results > div:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .search__container {
+    width: 95%; /* More width on smaller screens */
+    padding: 10px;
   }
-  
-  
+}
