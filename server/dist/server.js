@@ -1,5 +1,14 @@
 "use strict";
 // server.ts
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -17,7 +26,7 @@ const db = mysql2_1.default.createConnection({
     password: "Junmysql99!",
     database: "Traits_Tastes",
 });
-db.connect(err => {
+db.connect((err) => {
     if (err) {
         console.error("An error occurred while connecting to the DB:", err);
         throw err;
@@ -57,11 +66,36 @@ app.get("/search-wines", (req, res) => {
                 data: dataResults, // Cast to WineDetails[]
                 totalItems,
                 totalPages,
-                currentPage: page
+                currentPage: page,
             });
         });
     });
 });
+// POST endpoint to receive answers and return wine recommendations
+app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const answers = req.body.answers; // Assume answers are passed as an object with question IDs as keys
+    console.log("Received answers:", answers);
+    // Here you would typically process these answers to query the database for matching wines
+    // For now, let's just return a mock response
+    const mockRecommendations = [
+        {
+            id: 1,
+            name: "Chardonnay",
+            description: "A delightful white.",
+            imageUrl: "/images/chardonnay.png",
+        },
+        {
+            id: 2,
+            name: "Merlot",
+            description: "A soft and smooth red.",
+            imageUrl: "/images/merlot.png",
+        },
+    ];
+    // Simulate a database call
+    setTimeout(() => {
+        res.json(mockRecommendations);
+    }, 500);
+}));
 app.listen(3001, () => {
     console.log("Server running on http://localhost:3001");
 });

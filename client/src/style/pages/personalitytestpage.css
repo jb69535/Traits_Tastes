@@ -31,29 +31,59 @@
 }
 
 body {
+  margin: 0;
   padding-top: 60px; /* Adjust the value based on the height of your header */
   font-family: "Josefin Sans", sans-serif;
+  background-color: var(--color-grey-white);
 }
 
-/* Test section styles */
 #mbtiTest {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: calc(100vh - 60px); /* Adjust for the height of the fixed header */
-  background-color: var(--color-grey-white);
-  padding: 20px;
+  min-height: 100vh;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.mainLogo {
+  width: 100px;
+  margin-bottom: 30px;
 }
 
 .test__container {
-  display: flex;
-  flex-direction: column;
-  max-width: 600px; /* Limits the width for better readability on larger screens */
-  width: 100%; /* Ensures it takes the full width on smaller screens */
-  margin: 0 auto; /* Centers the container horizontally */
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: var(--color-white);
+  padding: 30px;
   border-radius: var(--size-border-radius);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+  width: 100%;
+  max-width: 700px;
+}
+
+.test__container:hover {
+  transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+  .test__container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 30px; /* Adjust for mobile */
+  }
+
+  .test__container {
+    padding: 15px;
+  }
+
+  .mainLogo {
+    width: 80px; /* Smaller logo on mobile */
+    margin-bottom: 20px;
+  }
 }

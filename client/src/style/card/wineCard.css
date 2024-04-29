@@ -1,0 +1,146 @@
+/* Global */
+:root {
+  /* Color */
+  --color-white: #ffffff;
+  --color-grey-white: #f7f6ee;
+  --color-light-grey: #bfbfbf;
+  --color-grey: #949494;
+  --color-rich-Burgundy: #7b1e3a;
+  --color-light-yellow: #fffec3;
+  --color-Soft-Gold: #daa49a;
+  --color-Creamy-Beige: #ead2ac;
+  --color-Dark-Charcoal: #333333;
+  --color-Vintage-Olive: #587d71;
+  --color-black: #000000;
+  /* Font Size */
+  --font-large: 2.5rem;
+  --font-medium: 1.375rem;
+  --font-regular: 0.9375rem;
+  --font-small: 0.75rem;
+  --font-micro: 0.625rem;
+  /* Font Weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+  /* Size */
+  --size-border-radius: 0.25rem;
+  /* Animation Duration */
+  --animation-duration: 300ms;
+}
+
+/* Layout */
+.wine-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+  min-height: 100%; /* Minimum height to cover the space */
+}
+
+.wine-recommendations {
+  margin-top: 1.25rem;
+}
+
+/* Typography */
+.wine-card-title {
+  font-size: var(--font-large);
+  font-weight: var(--weight-bold);
+  color: var(--color-rich-Burgundy);
+}
+
+.wine-name {
+  font-size: var(--font-medium);
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-dark-charcoal);
+}
+
+/* Buttons */
+.wine-card-button {
+  padding: 0.625rem 1.25rem;
+  margin: 0.625rem;
+  border: none;
+  border-radius: var(--size-border-radius);
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+  font-size: var(--font-regular);
+  cursor: pointer;
+  transition: background-color var(--animation-duration);
+}
+
+.wine-card-button:hover {
+  background-color: var(--color-Vintage-Olive);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: var(--color-white);
+  padding: 1.25rem;
+  border-radius: var(--size-border-radius);
+}
+
+/* Share buttons */
+.share-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.share-button button {
+  padding: 0.625rem;
+  margin: 0.3125rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+  font-size: var(--font-micro);
+  cursor: pointer;
+  transition: background-color var(--animation-duration);
+}
+
+.share-button button:hover {
+  background-color: var(--color-Vintage-Olive);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .wine-card-container {
+    padding: 1rem;
+  }
+
+  .wine-card-heading {
+    font-size: 2rem;
+  }
+
+  .wine-name {
+    font-size: 1.125rem;
+  }
+
+  .wine-card-button {
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .share-button button {
+    padding: 0.5rem;
+    margin: 0.25rem;
+    font-size: 0.625rem;
+  }
+}

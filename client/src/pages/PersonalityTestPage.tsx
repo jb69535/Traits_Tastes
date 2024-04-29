@@ -1,71 +1,82 @@
 // PersonalityTestPage.tsx
 // Author: Jun Beom
 
-// Inside questions array, each question has an ID and text property.
+// Inside questions array(From ../components/PersonalityTest.tsx), each question has an ID and text property.
 // QuestionCard.tsx(../card/QuestionCard) has a QuestionCardProps to communicate with this component.
 // Inside the QuestionCardProps interface, it has an onAnswer, which is a boolean type.
-// End of the question, user will encounter the completion function 
+// End of the question, user will encounter the completion function
 // which sends the answers to the backend.
 
-
-import React, { useState } from 'react';
-import QuestionCard from '../card/QuestionCard'; // Adjust the path as necessary
-import '../style/pages/personalitytestpage.css';
-
-// Sample questions data
-const questions = [
-    { id: 1, text: "Do you prefer social gatherings?" },
-    { id: 2, text: "I think a lot more than doing a task without plans." },
-    // Add more questions as needed
-];
+import React, { useState } from "react";
+import QuestionCard from "../card/QuestionCard";
+import WineCard from "../card/WineCard";
+import { questions } from "../services/PersonalityTest";
+import "../style/pages/personalitytestpage.css";
+import mainLogo from "../assets/MainLogo_BGRemove.svg";
 
 const PersonalityTestPage: React.FC = () => {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<{ [key: number]: boolean }>({});
+  // State for tracking the current question index and the answers collected
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<{ [key: number]: boolean }>({});
+  const [testSubmitted, setTestSubmitted] = useState(false);
 
-    const handleAnswer = (answer: boolean) => {
-        const question = questions[currentQuestionIndex];
-        setAnswers(prev => ({ ...prev, [question.id]: answer }));
+  // Function to handle when an answer is selected
+  const handleAnswer = (answer: boolean) => {
+    setAnswers((prev) => ({ ...prev, [questions[currentQuestionIndex].id]: answer }));
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
 
-        // Optionally move to next question automatically
-        handleNext();
-    };
+  // Function to move to the next or previous question
+  const changeQuestion = (direction: 'next' | 'previous') => {
+    const newIndex = direction === 'next' ? currentQuestionIndex + 1 : currentQuestionIndex - 1;
+    if (newIndex >= 0 && newIndex < questions.length) {
+      setCurrentQuestionIndex(newIndex);
+    }
+  };
 
-    const handleNext = () => {
-        if (currentQuestionIndex < questions.length - 1) {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
-        } else {
-            handleCompletion();
-        }
-    };
+  // Function to handle submission of the test
+  const handleSubmit = () => {
+    if (!testSubmitted) {  // Prevent multiple submissions
+      console.log('Submit button clicked, completion handler called');
+      setTestSubmitted(true);  // This triggers the display of WineCard
+      // Optionally, call fetchRecommendations or any other async operations here
+    }
+  };
 
-    const handlePrevious = () => {
-        if (currentQuestionIndex > 0) {
-            setCurrentQuestionIndex(currentQuestionIndex - 1);
-        }
-    };
+  const refreshTest = () => {
+    // Reset state related to the test
+    setCurrentQuestionIndex(0);
+    setAnswers({});
+    setTestSubmitted(false);
+  };
 
-    const handleCompletion = () => {
-        console.log("Answers:", answers);
-        // Send answers to backend for wine recommendations
-    };
-
-    return (
-        <div>
-            <section id="mbtiTest">
-                <div className="test__container">
-                    <QuestionCard
-                        question={questions[currentQuestionIndex]}
-                        onAnswer={handleAnswer}
-                        onNext={handleNext}
-                        onPrevious={handlePrevious}
-                        canGoBack={currentQuestionIndex > 0}
-                    />
-                </div>
-            </section>
-        </div>
-    );
+  return (
+    <div>
+      {testSubmitted ? (
+        <WineCard answers={answers} onTryAgain={refreshTest} />
+      ) : (
+        <section id="mbtiTest">
+          <div className="mainLogo">
+            <img src={mainLogo} alt="Main Logo" />
+          </div>
+          <div className="test__container">
+            <QuestionCard
+              question={questions[currentQuestionIndex]}
+              onAnswer={handleAnswer}
+              onNext={() => changeQuestion('next')}
+              onPrevious={() => changeQuestion('previous')}
+              onSubmit={handleSubmit}
+              isLast={currentQuestionIndex === questions.length - 1}
+              canGoBack={currentQuestionIndex > 0}
+              testSubmitted={testSubmitted}
+            />
+          </div>
+        </section>
+      )}
+    </div>
+  );
 };
 
 export default PersonalityTestPage;
-
