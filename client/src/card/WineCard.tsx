@@ -6,16 +6,10 @@ import { debounce } from "lodash";
 import {
   fetchRecommendations,
   WineRecommendation,
-} from "../services/fetchRecommendations"; // Adjust the path as necessary
-import Modal from "../components/Modal"; // Assuming you have a Modal component
-import {
-  FaEnvelope,
-  FaInstagram,
-  FaTwitter,
-  FaFacebook,
-  FaComments,
-} from "react-icons/fa"; // Icons for platforms
-import "../style/card/wineCard.css"; // Import the CSS file
+} from "../services/fetchRecommendations";
+import Modal from "../components/Modal";
+import { FaEnvelope, FaInstagram, FaSms } from "react-icons/fa";
+import "../style/card/wineCard.css";
 
 interface WineCardProps {
   answers: { [key: number]: boolean };
@@ -27,16 +21,15 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain }) => {
     []
   );
   const [showShareModal, setShowShareModal] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     const debouncedFetchRecommendations = debounce(async () => {
       const fetchedRecommendations = await fetchRecommendations(answers);
       setRecommendations(fetchedRecommendations);
-    }, 500); // Adjust the debounce delay as needed
+    }, 500);
 
     debouncedFetchRecommendations();
-
-    // Cleanup function to cancel debounced function on unmount
     return () => {
       debouncedFetchRecommendations.cancel();
     };
@@ -51,9 +44,29 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain }) => {
   };
 
   const shareOnPlatform = (platform: string) => {
-    // Implement sharing functionality based on the selected platform
-    console.log(`Sharing on ${platform}`);
-    // Close the modal after sharing
+    let url = "";
+    switch (platform) {
+      case "email":
+        url = `mailto:?subject=Wine Recommendation&body=Check out this wine recommendation at ${window.location.href}`;
+        break;
+      case "sms":
+        if (phoneNumber) {
+          url = `sms:${phoneNumber}?&body=Check out this wine recommendation at ${window.location.href}`;
+          window.open(url, "_blank");
+        } else {
+          alert("Please enter a valid phone number.");
+        }
+        break;
+      case "instagram":
+        alert(
+          "To share on Instagram stories, please save the link and share it through the Instagram app."
+        );
+        break;
+      default:
+        console.error("Unsupported platform");
+        return;
+    }
+
     closeShareModal();
   };
 
@@ -83,6 +96,12 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain }) => {
         {showShareModal && (
           <Modal isOpen={showShareModal} onClose={closeShareModal}>
             <h2>Share on:</h2>
+            <input
+              type="text"
+              placeholder="Enter phone number for SMS"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
             <div className="share-button">
               <button onClick={() => shareOnPlatform("email")}>
                 <FaEnvelope />
@@ -90,14 +109,8 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain }) => {
               <button onClick={() => shareOnPlatform("instagram")}>
                 <FaInstagram />
               </button>
-              <button onClick={() => shareOnPlatform("twitter")}>
-                <FaTwitter />
-              </button>
-              <button onClick={() => shareOnPlatform("facebook")}>
-                <FaFacebook />
-              </button>
-              <button onClick={() => shareOnPlatform("kakaotalk")}>
-                <FaComments />
+              <button onClick={() => shareOnPlatform("sms")}>
+                <FaSms />
               </button>
             </div>
           </Modal>
