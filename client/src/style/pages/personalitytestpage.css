@@ -2,32 +2,58 @@
 
 /* Global */
 :root {
-    /* Color */
-    --color-white: #ffffff;
-    --color-grey-white: #f7f6ee;
-    --color-light-grey: #bfbfbf;
-    --color-grey: #949494;
-    --color-rich-Burgundy: #7b1e3a;
-    --color-light-yellow: #fffec3;
-    --color-Soft-Gold: #daa49a;
-    --color-Creamy-Beige: #ead2ac;
-    --color-Dark-Charcoal: #333333;
-    --color-Vintage-Olive: #587d71;
-    --color-black: #000000;
-    /* Font Size */
-    --font-large: 40px;
-    --font-medium: 22px;
-    --font-regular: 15px;
-    --font-small: 12px;
-    --font-micro: 10px;
-    /* Font Weight */
-    --weight-bold: 700;
-    --weight-semi-bold: 600;
-    --weight-regular: 400;
-    /* Size */
-    --size-border-radius: 4px;
-    /* Animation Duration */
-    --animation-duration: 300ms;
-  }
-  
-  
+  /* Color */
+  --color-white: #ffffff;
+  --color-grey-white: #f7f6ee;
+  --color-light-grey: #bfbfbf;
+  --color-grey: #949494;
+  --color-rich-Burgundy: #7b1e3a;
+  --color-light-yellow: #fffec3;
+  --color-Soft-Gold: #daa49a;
+  --color-Creamy-Beige: #ead2ac;
+  --color-Dark-Charcoal: #333333;
+  --color-Vintage-Olive: #587d71;
+  --color-black: #000000;
+  /* Font Size */
+  --font-large: 40px;
+  --font-medium: 22px;
+  --font-regular: 15px;
+  --font-small: 12px;
+  --font-micro: 10px;
+  /* Font Weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+  /* Size */
+  --size-border-radius: 4px;
+  /* Animation Duration */
+  --animation-duration: 300ms;
+}
+
+body {
+  padding-top: 60px; /* Adjust the value based on the height of your header */
+  font-family: "Josefin Sans", sans-serif;
+}
+
+/* Test section styles */
+#mbtiTest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 60px); /* Adjust for the height of the fixed header */
+  background-color: var(--color-grey-white);
+  padding: 20px;
+}
+
+.test__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; /* Limits the width for better readability on larger screens */
+  width: 100%; /* Ensures it takes the full width on smaller screens */
+  margin: 0 auto; /* Centers the container horizontally */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--size-border-radius);
+}
