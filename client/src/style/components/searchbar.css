@@ -127,6 +127,24 @@ input[type="text"] {
   border-bottom: 1px solid var(--color-light-grey); /* Responsive line */
 }
 
+.goShop {
+  display: flex;
+}
+
+.goShop button{
+  margin-left: auto;
+  padding: 10px;
+  border-radius: var(--size-border-radius);
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+}
+
+.goShop button:hover {
+  background-color: var(--color-Soft-Gold);
+}
+
 /* Pagination */
 .pagination {
   display: flex;

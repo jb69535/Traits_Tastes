@@ -11,6 +11,13 @@ const Rankings: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Function to handle shop click
+  const handleShopClick = (wine: any) => {
+    const query = `${wine.Title} ${wine.Grape} Vintage ${wine.Vintage}`;
+    const url = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(query)}`;
+    window.open(url, '_blank');
+  };
+
   useEffect(() => {
     const fetchRankings = async () => {
       try {
@@ -54,6 +61,9 @@ const Rankings: React.FC = () => {
             </div>
             <br />
             <div>Vintage: {wine.Vintage}</div>
+            <div className="goShop">
+              <button onClick={() => handleShopClick(wine)}>GO Shop</button>
+            </div>
           </li>
         ))}
       </ul>

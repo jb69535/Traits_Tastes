@@ -145,6 +145,13 @@ const Searchbar: React.FC = () => {
     );
   };
 
+  // Function to handle shop click
+  const handleShopClick = (wine: any) => {
+    const query = `${wine.Title} ${wine.Grape} Vintage ${wine.Vintage}`;
+    const url = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(query)}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div className="search__container">
       <img className="mainLogo" src={FontLogo} alt="logo" />
@@ -183,6 +190,9 @@ const Searchbar: React.FC = () => {
               {wine.Country} | {wine.Region}
             </div>
             <div>{wine.Vintage}</div>
+            <div className="goShop">
+              <button onClick={() => handleShopClick(wine)}>GO Shop</button>
+            </div>
           </div>
         ))}
       </div>
