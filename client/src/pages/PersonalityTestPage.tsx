@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import QuestionCard from "../card/QuestionCard";
 import WineCard from "../card/WineCard";
 import { questions } from "../services/PersonalityTest";
+import { calculateMBTIResult } from "../services/MBTICalculator";
 import "../style/pages/personalitytestpage.css";
 import mainLogo from "../assets/MainLogo_BGRemove.svg";
 
@@ -19,10 +20,12 @@ const PersonalityTestPage: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<{ [key: number]: boolean }>({});
   const [testSubmitted, setTestSubmitted] = useState(false);
+  const [mbtiResult, setMBTIResult] = useState<string | null>(null);
 
   // Function to handle when an answer is selected
   const handleAnswer = (answer: boolean) => {
     setAnswers((prev) => ({ ...prev, [questions[currentQuestionIndex].id]: answer }));
+    console.log(`Question ${questions[currentQuestionIndex].id} answered: ${answer ? 'True' : 'False'}`);
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
@@ -41,7 +44,8 @@ const PersonalityTestPage: React.FC = () => {
     if (!testSubmitted) {  // Prevent multiple submissions
       console.log('Submit button clicked, completion handler called');
       setTestSubmitted(true);  // This triggers the display of WineCard
-      // Optionally, call fetchRecommendations or any other async operations here
+      const result = calculateMBTIResult(answers);
+      setMBTIResult(result);
     }
   };
 
@@ -50,12 +54,13 @@ const PersonalityTestPage: React.FC = () => {
     setCurrentQuestionIndex(0);
     setAnswers({});
     setTestSubmitted(false);
+    setMBTIResult(null);
   };
 
   return (
     <div>
       {testSubmitted ? (
-        <WineCard answers={answers} onTryAgain={refreshTest} />
+        <WineCard answers={answers} onTryAgain={refreshTest} mbtiResult={mbtiResult} />
       ) : (
         <section id="mbtiTest">
           <div className="mainLogo">

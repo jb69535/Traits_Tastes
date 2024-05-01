@@ -14,9 +14,10 @@ import "../style/card/wineCard.css";
 interface WineCardProps {
   answers: { [key: number]: boolean };
   onTryAgain: () => void;
+  mbtiResult: string | null;
 }
 
-const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain }) => {
+const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain, mbtiResult }) => {
   const [recommendations, setRecommendations] = useState<WineRecommendation[]>(
     []
   );
@@ -79,6 +80,9 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain }) => {
     <div className="wine-card-container">
       <div className="wine-card-title">
         <h2>Wine Recommendations</h2>
+      </div>
+      <div className="MBTI">
+        {mbtiResult && <h3>MBTI Result: {mbtiResult}</h3>}
       </div>
       <div className="wine__recommendations">
         {recommendations.map((recommendation, index) => (

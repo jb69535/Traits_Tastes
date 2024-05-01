@@ -48,6 +48,11 @@
   font-weight: var(--weight-bold);
   color: var(--color-rich-Burgundy);
 }
+.MBTI {
+  font-size: var(--font-medium);
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-dark-charcoal);
+}
 
 .wine-name {
   font-size: var(--font-medium);

@@ -89,7 +89,7 @@ app.get("/weekly-rankings", (req, res) => __awaiter(void 0, void 0, void 0, func
     WHERE s.weekOfYear = WEEK(CURDATE(), 1) AND s.year = YEAR(CURDATE())
     ORDER BY s.searchCount DESC
     LIMIT 5;
-`; // Adjust according to your needs
+`;
         const [rankings] = yield db.promise().query(query);
         res.json(rankings);
     }
