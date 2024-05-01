@@ -76,6 +76,22 @@ input[type="text"] {
   background-color: var(--color-Soft-Gold);
 }
 
+.sortBy {
+  margin: 5px;
+  padding: 10px;
+  flex-basis: 20%;  /* Button takes less space */
+  border-radius: var(--size-border-radius);
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+}
+
+.sortBy:hover {
+  background-color: var(--color-Soft-Gold);
+}
+
+
 /* Dropdown */
 .dropdown {
   width: 100%; /* Match width with input */

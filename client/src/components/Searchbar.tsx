@@ -1,15 +1,15 @@
 // Searchbar.tsx
 // Author: Jun Beom
 
-// Searchbar.tsx
-// Author: Jun Beom
-
 import React, { useState } from "react";
 import { Wine } from "../types/wineSearch";
 import "../style/components/searchbar.css";
 import FontLogo from "../assets/FontLgoBGRemove.svg";
 
-function debounce(func: (...args: any[]) => void, wait: number): (...args: any[]) => void {
+function debounce(
+  func: (...args: any[]) => void,
+  wait: number
+): (...args: any[]) => void {
   let timeout: NodeJS.Timeout | null = null;
   return function executedFunction(...args: any[]) {
     const later = () => {
@@ -31,7 +31,11 @@ const Searchbar: React.FC = () => {
   const [resultsPerPage] = useState<number>(10);
   const [totalPages, setTotalPages] = useState<number>(0);
 
-  const fetchWines = async (query: string, page: number, isDropdown: boolean = false) => {
+  const fetchWines = async (
+    query: string,
+    page: number,
+    isDropdown: boolean = false
+  ) => {
     if (!query.trim()) {
       setError("Please enter a search term");
       setIsLoading(false);
@@ -39,11 +43,13 @@ const Searchbar: React.FC = () => {
       setWines([]);
       return;
     }
-  
+
     setIsLoading(true);
     setError("");
-    const url = `http://localhost:3001/search-wines?search=${encodeURIComponent(query)}&page=${page}&limit=${resultsPerPage}`;
-  
+    const url = `http://localhost:3001/search-wines?search=${encodeURIComponent(
+      query
+    )}&page=${page}&limit=${resultsPerPage}`;
+
     try {
       const response = await fetch(url);
       if (response.ok) {
@@ -66,28 +72,49 @@ const Searchbar: React.FC = () => {
     }
   };
 
-  const debouncedFetchWines = debounce(() => fetchWines(searchTerm, 1, true), 300);
+  const debouncedFetchWines = debounce(
+    () => fetchWines(searchTerm, 1, true),
+    300
+  );
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     if (event.target.value.length > 0) {
-      debouncedFetchWines();  // This will now manage dropdown suggestions.
+      debouncedFetchWines(); // This will now manage dropdown suggestions.
     } else {
-      setFilteredWines([]);  // Clear suggestions if the input is empty.
+      setFilteredWines([]); // Clear suggestions if the input is empty.
     }
   };
-  
+
   const handleSearch = async (event: React.FormEvent) => {
     event.preventDefault();
     setCurrentPage(1); // Reset to first page on new search
-    await fetchWines(searchTerm, 1, false);  // Make sure the search is not for dropdown.
+    await fetchWines(searchTerm, 1, false); // Make sure the search is not for dropdown.
   };
-  
 
-  const handleSelect = (wineTitle: string) => {
-    setSearchTerm(wineTitle);
+  const handleSelect = async (wine: Wine) => {
+    setSearchTerm(wine.Title);
     setFilteredWines([]);
-    fetchWines(wineTitle, 1); // Assume selecting from dropdown always takes you to the first page of results
+    fetchWines(wine.Title, 1); // Assume selecting from dropdown always takes you to the first page of results
+
+    // Notify the backend about the wine selection
+    try {
+      const response = await fetch(`http://localhost:3001/record-selection`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ wineId: wine.WineID }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to record wine selection");
+      }
+
+      console.log("Selection recorded");
+    } catch (error) {
+      console.error("Error recording selection:", error);
+    }
   };
 
   // Function to handle normal page changes
@@ -102,8 +129,8 @@ const Searchbar: React.FC = () => {
     fetchWines(searchTerm, 1);
   };
 
-   // Function to handle jumping to the last page
-   const handleLastPage = () => {
+  // Function to handle jumping to the last page
+  const handleLastPage = () => {
     setCurrentPage(totalPages);
     fetchWines(searchTerm, totalPages);
   };
@@ -112,7 +139,10 @@ const Searchbar: React.FC = () => {
   const getPageNumbers = () => {
     const startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
     const endPage = Math.min(startPage + 9, totalPages);
-    return Array.from({ length: endPage - startPage + 1 }, (_, idx) => startPage + idx);
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, idx) => startPage + idx
+    );
   };
 
   return (
@@ -127,6 +157,8 @@ const Searchbar: React.FC = () => {
             onChange={handleInputChange}
           />
           <input type="submit" value="Search" className="search__button" />
+          <button className="sortBy">Sort</button>{" "}
+          {/* STILL IN PROCESS!!! NEED TO BE IMPLEMENTED */}
         </div>
       </form>
       {isLoading && <div>Loading...</div>}
@@ -135,7 +167,7 @@ const Searchbar: React.FC = () => {
         {filteredWines.map((wine, index) => (
           <div
             key={index}
-            onClick={() => handleSelect(wine.Title)}
+            onClick={() => handleSelect(wine)}
             className="dropdown-content"
           >
             {wine.Title}
@@ -144,29 +176,45 @@ const Searchbar: React.FC = () => {
       </div>
       <div className="wine__results">
         {wines.map((wine, index) => (
-          <div key={index}>
+          <div key={index} onClick={() => handleSelect(wine)} style={{ cursor: 'pointer' }}>
             <div>{wine.Title}</div>
             <div>{wine.Grape}</div>
-            <div>{wine.Country} | {wine.Region}</div>
+            <div>
+              {wine.Country} | {wine.Region}
+            </div>
             <div>{wine.Vintage}</div>
           </div>
         ))}
       </div>
       <div className="pagination">
-        <button onClick={handleFirstPage} disabled={currentPage === 1}>First</button>
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-        {getPageNumbers().map(pageNumber => (
+        <button onClick={handleFirstPage} disabled={currentPage === 1}>
+          First
+        </button>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        {getPageNumbers().map((pageNumber) => (
           <button
             key={pageNumber}
             onClick={() => handlePageChange(pageNumber)}
             disabled={currentPage === pageNumber}
-            className={currentPage === pageNumber ? 'active' : ''}
+            className={currentPage === pageNumber ? "active" : ""}
           >
             {pageNumber}
           </button>
         ))}
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
-        <button onClick={handleLastPage} disabled={currentPage === totalPages}>Last</button>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+        <button onClick={handleLastPage} disabled={currentPage === totalPages}>
+          Last
+        </button>
       </div>
     </div>
   );

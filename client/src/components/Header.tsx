@@ -39,10 +39,11 @@ const Header: React.FC = () => {
             >
               Search
             </li>
-            <li className="navbar__menu__item">
-              <Link className="mbti" to="/personality-test">
-                MBTI
-              </Link>
+            <li
+              className="navbar__menu__item"
+              onClick={() => scrollToSection("#rankings")}
+            >
+              Rankings
             </li>
             <li
               className="navbar__menu__item"
@@ -55,6 +56,11 @@ const Header: React.FC = () => {
               onClick={() => scrollToSection("#contact")}
             >
               Contact
+            </li>
+            <li className="navbar__menu__item">
+              <Link className="mbti" to="/personality-test">
+                MBTI
+              </Link>
             </li>
           </ul>
           {/* <!-- Toggle Button --> */}

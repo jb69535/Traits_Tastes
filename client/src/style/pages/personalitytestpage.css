@@ -49,8 +49,11 @@ body {
 }
 
 .mainLogo {
-  width: 100px;
+  display: flex;
+  width: 100%;
   margin-bottom: 30px;
+  align-items: center;
+  justify-content: center;
 }
 
 .test__container {

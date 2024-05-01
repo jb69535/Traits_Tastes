@@ -4,6 +4,7 @@
 import React from "react";
 import "../style/pages/home.css";
 import Searchbar from "../components/Searchbar";
+import Rankings from "../components/Rankings";
 
 const Home: React.FC = () => {
   return (
@@ -14,6 +15,9 @@ const Home: React.FC = () => {
             <Searchbar />
           </section>
         </div>
+      </section>
+      <section id="rankings">
+        <Rankings />
       </section>
       <section id="about">
         <div>

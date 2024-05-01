@@ -33,6 +33,15 @@ db.connect((err) => {
     }
     console.log("Connected to database!");
 });
+function getCurrentWeekNumber() {
+    const today = new Date();
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+    const pastDaysOfYear = (today.getTime() -
+        firstDayOfYear.getTime() +
+        ((firstDayOfYear.getDay() + 6) % 7) * 86400000) /
+        86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+}
 app.get("/search-wines", (req, res) => {
     const searchTerm = req.query.search;
     const page = parseInt(req.query.page) || 1;
@@ -71,6 +80,41 @@ app.get("/search-wines", (req, res) => {
         });
     });
 });
+app.get("/weekly-rankings", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const query = `
+    SELECT w.WineID, w.Title, w.Grape, w.Country, w.Region, w.Vintage, s.searchCount
+    FROM WineSearchCounts s
+    JOIN WineDetails w ON s.wineId = w.WineID
+    WHERE s.weekOfYear = WEEK(CURDATE(), 1) AND s.year = YEAR(CURDATE())
+    ORDER BY s.searchCount DESC
+    LIMIT 5;
+`; // Adjust according to your needs
+        const [rankings] = yield db.promise().query(query);
+        res.json(rankings);
+    }
+    catch (error) {
+        console.error("Failed to fetch weekly rankings:", error);
+        res.status(500).send("Error fetching weekly rankings");
+    }
+}));
+app.post("/record-selection", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { wineId } = req.body;
+    const weekOfYear = getCurrentWeekNumber();
+    const year = new Date().getFullYear();
+    const updateCountQuery = `
+      INSERT INTO WineSearchCounts (wineId, searchCount, weekOfYear, year)
+      VALUES (?, 1, ?, ?)
+      ON DUPLICATE KEY UPDATE searchCount = searchCount + 1;
+  `;
+    db.query(updateCountQuery, [wineId, weekOfYear, year], (error, results) => {
+        if (error) {
+            console.error("Error updating search count:", error);
+            return res.status(500).send("Failed to record selection");
+        }
+        res.status(200).send("Selection recorded successfully");
+    });
+}));
 // POST endpoint to receive answers and return wine recommendations
 app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const answers = req.body.answers; // Assume answers are passed as an object with question IDs as keys
