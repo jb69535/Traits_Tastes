@@ -1,5 +1,5 @@
 // fetchRecommendations.ts
-
+// Author: Jun Beom
 // Define the type for your answers and recommendations somewhere accessible
 export interface WineRecommendation {
   Title: string;

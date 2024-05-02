@@ -1,6 +1,7 @@
 // MBTICalculator.ts
-
+// Author: Jun Beom
 // Calculate MBTI result based on user's answers
+
 export const calculateMBTIResult = (answers: {
     [key: string]: boolean;
   }): string => {

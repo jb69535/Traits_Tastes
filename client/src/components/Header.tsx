@@ -1,5 +1,6 @@
 // Header.tsx
 // Author: Jun Beom
+
 import React, { useState } from "react";
 import "../style/components/header.css";
 import FontLogo from "../assets/FontLgoBGRemove.svg";

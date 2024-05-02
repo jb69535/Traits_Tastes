@@ -1,4 +1,5 @@
 // QuestionCard.tsx
+// Author: Jun Beom
 
 import React from "react";
 import "../style/card/questionCard.css";

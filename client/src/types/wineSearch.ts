@@ -1,4 +1,5 @@
 // wineSearch.ts
+// Author: Jun Beom
 
 export type Wine = {
     WineID: number;

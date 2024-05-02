@@ -1,4 +1,5 @@
 // Modal.tsx
+// Author: Jun Beom
 
 import React from 'react';
 import '../style/components/modal.css'; // You'll need to create this CSS file for styling
