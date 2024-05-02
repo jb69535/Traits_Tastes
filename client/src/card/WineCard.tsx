@@ -27,6 +27,7 @@ const WineCard: React.FC<WineCardProps> = ({
   );
   const [showShareModal, setShowShareModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  
 
   useEffect(() => {
     const debouncedFetchRecommendations = debounce(async () => {
@@ -55,30 +56,44 @@ const WineCard: React.FC<WineCardProps> = ({
 
   const shareOnPlatform = (platform: string) => {
     let url = "";
+    let message = "";
+    
+    // Generate the link to the current page with the MBTI result as a query parameter
+    const pageUrl = window.location.href;
+    const mbtiLink = mbtiResult ? `${pageUrl}?mbti=${encodeURIComponent(mbtiResult)}` : '';
+
     switch (platform) {
-      case "email":
-        url = `mailto:?subject=Wine Recommendation&body=Check out this wine recommendation at ${window.location.href}`;
-        break;
-      case "sms":
-        if (phoneNumber) {
-          url = `sms:${phoneNumber}?&body=Check out this wine recommendation at ${window.location.href}`;
-          window.open(url, "_blank");
-        } else {
-          alert("Please enter a valid phone number.");
-        }
-        break;
-      case "instagram":
-        alert(
-          "To share on Instagram stories, please save the link and share it through the Instagram app."
-        );
-        break;
-      default:
-        console.error("Unsupported platform");
-        return;
+        case "email":
+            message = `Check out this wine recommendation for MBTI type ${mbtiResult}:\n\n`;
+            recommendations.forEach((recommendation, index) => {
+                message += `${index + 1}. ${recommendation.Title}, ${recommendation.Grape}, Vintage ${recommendation.Vintage}\n`;
+                message += `Characteristics: ${recommendation.Characteristics}\n\n`;
+            });
+            message += `Check out your Taste!, click here: ${mbtiLink}`;
+            url = `mailto:?subject=Wine Recommendation for MBTI type ${mbtiResult}&body=${encodeURIComponent(message)}`;
+            break;
+        case "sms":
+            message = `Check out this wine recommendation for MBTI type ${mbtiResult}:\n\n`;
+            recommendations.forEach((recommendation, index) => {
+                message += `${index + 1}. ${recommendation.Title}, ${recommendation.Grape}, Vintage ${recommendation.Vintage}\n`;
+                message += `Characteristics: ${recommendation.Characteristics}\n\n`;
+            });
+            message += `Check out your Taste!, click here: ${mbtiLink}`;
+            url = `sms:${phoneNumber}?&body=${encodeURIComponent(message)}`;
+            window.open(url, "_blank");
+            break;
+        case "instagram":
+            alert(
+                "To share on Instagram stories, please save the link and share it through the Instagram app."
+            );
+            break;
+        default:
+            console.error("Unsupported platform");
+            return;
     }
 
     closeShareModal();
-  };
+};
 
   const handleTryAgain = () => {
     // Call the prop function to refresh the test

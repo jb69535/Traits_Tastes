@@ -148,8 +148,10 @@ const Searchbar: React.FC = () => {
   // Function to handle shop click
   const handleShopClick = (wine: any) => {
     const query = `${wine.Title} ${wine.Grape} Vintage ${wine.Vintage}`;
-    const url = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(query)}`;
-    window.open(url, '_blank');
+    const url = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(
+      query
+    )}`;
+    window.open(url, "_blank");
   };
 
   return (
@@ -164,8 +166,6 @@ const Searchbar: React.FC = () => {
             onChange={handleInputChange}
           />
           <input type="submit" value="Search" className="search__button" />
-          <button className="sortBy">Sort</button>{" "}
-          {/* STILL IN PROCESS!!! NEED TO BE IMPLEMENTED */}
         </div>
       </form>
       {isLoading && <div>Loading...</div>}
@@ -183,7 +183,11 @@ const Searchbar: React.FC = () => {
       </div>
       <div className="wine__results">
         {wines.map((wine, index) => (
-          <div key={index} onClick={() => handleSelect(wine)} style={{ cursor: 'pointer' }}>
+          <div
+            key={index}
+            onClick={() => handleSelect(wine)}
+            style={{ cursor: "pointer" }}
+          >
             <div>{wine.Title}</div>
             <div>{wine.Grape}</div>
             <div>

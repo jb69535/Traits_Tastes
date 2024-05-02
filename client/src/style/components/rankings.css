@@ -32,6 +32,8 @@
 
 /* rankings.css */
 .ranking-container {
+  display: flex;
+  flex-direction: column;
   margin: auto;
   width: 33%;
   background-color: var(--color-grey-white);

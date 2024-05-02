@@ -61,7 +61,7 @@ input[type="text"], .search__button {
 }
 
 input[type="text"] {
-  flex-basis: 80%;  /* Text input takes more space */
+  flex-basis: 90%;  /* Text input takes more space */
 }
 
 .search__button {
@@ -115,6 +115,40 @@ input[type="text"] {
 .dropdown-content:hover {
   background-color: var(--color-Creamy-Beige);
 }
+
+/* Sorting Dropdown and Button */
+.sort__controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sort__dropdown, .sort__toggle {
+  margin-right: 5px;
+  height: fit-content;
+  border-radius: var(--size-border-radius);
+  border: 2px solid var(--color-rich-Burgundy);
+  background-color: var(--color-white);
+  color: var(--color-Dark-Charcoal);
+  cursor: pointer;
+  width: fit-content;
+}
+
+.sort__dropdown:focus, .sort__toggle:focus {
+  outline: none;
+  border-color: var(--color-Soft-Gold);
+}
+
+.sort__toggle {
+  background-color: var(--color-rich-Burgundy);
+  color: var(--color-white);
+}
+
+.sort__toggle:hover {
+  background-color: var(--color-Soft-Gold);
+  color: var(--color-Dark-Charcoal);
+}
+
 
 /* Wine Results */
 .wine__results {

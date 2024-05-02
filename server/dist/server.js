@@ -125,19 +125,21 @@ app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0,
     }
     try {
         const winePreferences = (0, interfaces_1.getWinePreferencesByMBTI)(mbti); // Assuming you have a function that maps MBTI to wine preferences
+        // Construct the SQL query to select wines only from the specified grape preferences
+        const placeholders = winePreferences.map(() => "?").join(","); // Generate placeholders
         const query = `
     SELECT 
-    MAX(wd.Title) AS Title, 
-    wd.Grape, 
-    MAX(wd.Vintage) AS Vintage, 
-    MAX(wc.Characteristics) AS Characteristics
+        wd.Title AS Title, 
+        wd.Grape, 
+        wd.Vintage AS Vintage, 
+        wc.Characteristics AS Characteristics
     FROM WineDetails wd
     JOIN WineCharacteristics wc ON wd.WineID = wc.WineID
-    WHERE wd.Grape IN (?)
-    GROUP BY wd.Grape
+    WHERE wd.Grape IN (${placeholders})
     ORDER BY RAND()
     LIMIT 2;`;
-        const wines = yield db.promise().query(query, [winePreferences]); // Pass the wine preferences here
+        const values = winePreferences; // Prepare array of parameter values
+        const wines = yield db.promise().query(query, values);
         res.json(wines[0]);
     }
     catch (error) {
