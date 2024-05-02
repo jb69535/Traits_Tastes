@@ -8,28 +8,46 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  setup-build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install client dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Install server dependencies
+        working-directory: ./server
         run: npm install
 
       - name: Build client
-        run: npm run build --prefix client
+        working-directory: ./client
+        run: npm run build
 
       - name: Build server
-        run: npm run build --prefix server
+        working-directory: ./server
+        run: npm run build
 
-      - name: Deploy to Server
-        run: echo "Deploy steps here"
+      - name: Run client tests
+        working-directory: ./client
+        run: npm test
 
-      - name: Deploy client to Static Site Hosting
-        run: echo "Static deploy steps here"
+      - name: Run server tests
+        working-directory: ./server
+        run: npm test
+
+      - name: Deploy client to hosting service
+        working-directory: ./client
+        run: echo "Deploy client steps here" # Replace this with your actual deploy command
+
+      - name: Deploy server to server environment
+        working-directory: ./server
+        run: echo "Deploy server steps here" # Replace this with your actual deploy command
