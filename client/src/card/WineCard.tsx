@@ -17,7 +17,11 @@ interface WineCardProps {
   mbtiResult: string | null;
 }
 
-const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain, mbtiResult }) => {
+const WineCard: React.FC<WineCardProps> = ({
+  answers,
+  onTryAgain,
+  mbtiResult,
+}) => {
   const [recommendations, setRecommendations] = useState<WineRecommendation[]>(
     []
   );
@@ -26,15 +30,20 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain, mbtiResult }) 
 
   useEffect(() => {
     const debouncedFetchRecommendations = debounce(async () => {
-      const fetchedRecommendations = await fetchRecommendations(answers);
-      setRecommendations(fetchedRecommendations);
+      if (mbtiResult) {
+        console.log("Fetching recommendations for MBTI result:", mbtiResult);
+        const fetchedRecommendations = await fetchRecommendations(mbtiResult);
+        console.log("Fetched Recommendations:", fetchedRecommendations);
+        setRecommendations(fetchedRecommendations);
+      }
     }, 500);
 
     debouncedFetchRecommendations();
     return () => {
       debouncedFetchRecommendations.cancel();
+      console.log("Cleanup or cancellation occurred");
     };
-  }, [answers]);
+  }, [mbtiResult]);
 
   const handleShare = () => {
     setShowShareModal(true);
@@ -76,6 +85,13 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain, mbtiResult }) 
     onTryAgain();
   };
 
+  // Function to handle shop click
+  const handleShopClick = (recommendation: any) => {
+    const query = `${recommendation.Title} ${recommendation.Grape} Vintage ${recommendation.Vintage}`;
+    const url = `https://www.google.com/search?tbm=shop&q=${encodeURIComponent(query)}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div className="wine-card-container">
       <div className="wine-card-title">
@@ -86,9 +102,16 @@ const WineCard: React.FC<WineCardProps> = ({ answers, onTryAgain, mbtiResult }) 
       </div>
       <div className="wine__recommendations">
         {recommendations.map((recommendation, index) => (
-          <div className="wine-recommendations" key={index}>
-            <h3 className="wine-name">{recommendation.name}</h3>
-            {/* Display more information about the recommendation */}
+          <div className="wine-recommendation-item" key={index}>
+            <h3 className="wine-name">{recommendation.Title}</h3>
+            <p className="wine-grape">{recommendation.Grape}</p>
+            <p className="wine-vintage">{recommendation.Vintage}</p>
+            <p className="wine-characteristics">
+              {recommendation.Characteristics}
+            </p>
+            <div className="goShop">
+              <button onClick={() => handleShopClick(recommendation)}>GO Shop</button>
+            </div>
           </div>
         ))}
         <button className="wine-card-button" onClick={handleTryAgain}>

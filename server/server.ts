@@ -5,7 +5,11 @@ import express from "express";
 import mysql from "mysql2";
 import { Request, Response } from "express";
 import cors from "cors";
-import { CountResult, WineDetails } from "./types/interfaces"; // Make sure the path is correct
+import {
+  CountResult,
+  WineDetails,
+  getWinePreferencesByMBTI,
+} from "./types/interfaces";
 
 const app = express();
 app.use(cors());
@@ -126,30 +130,35 @@ app.post("/record-selection", async (req: Request, res: Response) => {
 
 // POST endpoint to receive answers and return wine recommendations
 app.post("/api/recommendations", async (req: Request, res: Response) => {
-  const answers = req.body.answers; // Assume answers are passed as an object with question IDs as keys
-  console.log("Received answers:", answers);
+  const mbti = req.body.mbti; // MBTI result from the client
 
-  // Here you would typically process these answers to query the database for matching wines
-  // For now, let's just return a mock response
-  const mockRecommendations = [
-    {
-      id: 1,
-      name: "Chardonnay",
-      description: "A delightful white.",
-      imageUrl: "/images/chardonnay.png",
-    },
-    {
-      id: 2,
-      name: "Merlot",
-      description: "A soft and smooth red.",
-      imageUrl: "/images/merlot.png",
-    },
-  ];
+  if (!mbti) {
+    res.status(400).send("MBTI result is required.");
+    return;
+  }
 
-  // Simulate a database call
-  setTimeout(() => {
-    res.json(mockRecommendations);
-  }, 500);
+  try {
+    const winePreferences = getWinePreferencesByMBTI(mbti); // Assuming you have a function that maps MBTI to wine preferences
+
+    const query = `
+    SELECT 
+    MAX(wd.Title) AS Title, 
+    wd.Grape, 
+    MAX(wd.Vintage) AS Vintage, 
+    MAX(wc.Characteristics) AS Characteristics
+    FROM WineDetails wd
+    JOIN WineCharacteristics wc ON wd.WineID = wc.WineID
+    WHERE wd.Grape IN (?)
+    GROUP BY wd.Grape
+    ORDER BY RAND()
+    LIMIT 2;`;
+
+    const wines = await db.promise().query(query, [winePreferences]); // Pass the wine preferences here
+    res.json(wines[0]);
+  } catch (error) {
+    console.error("Error fetching recommendations:", error);
+    res.status(500).send("Error fetching recommendations");
+  }
 });
 
 app.listen(3001, () => {

@@ -1,0 +1,80 @@
+ESTJ:
+Cabernet Sauvignon: Known for its structure and tannicity, appealing to the ESTJ's preference for organized and robust profiles.
+Merlot: Offers a balance of body and softer tannins, suitable for the ESTJ's leadership qualities.
+Chardonnay: Full-bodied with potential for complexity when aged or oaked, aligning with the ESTJ's preference for depth and detail.
+
+ESFJ:
+Prosecco: Light and social, matching the ESFJ's outgoing nature.
+Pinot Noir: Subtle complexity which can cater to the ESFJ's caring and harmonious personality.
+Riesling: Can be sweet or dry, versatile enough to suit the adaptable and supportive ESFJ.
+
+ESTP:
+Zinfandel: Bold and adventurous, fitting the dynamic and persuasive ESTP.
+Syrah: Robust and powerful, appealing to the action-oriented ESTP.
+Barbera: High acidity and robust flavor profile, suitable for the straightforward and impactful ESTP.
+
+ESFP:
+Moscato: Sweet and fun, aligning with the ESFP's lively and spontaneous traits.
+Beaujolais: Fruity and vibrant, matches the playful and enthusiastic ESFP.
+Grenache: Berry-flavored and versatile, perfect for the artistic and flexible ESFP.
+
+ENFJ:
+Prosecco: Sociable and inviting, fitting the ENFJ's charismatic and nurturing traits.
+Cabernet Franc: Complex and engaging, appealing to the ENFJ's leadership qualities and depth of insight.
+Chardonnay: Full-bodied and nurturing, aligning with the warm and persuasive nature of ENFJs.
+
+ENFP:
+Beaujolais: Youthful and vibrant, matching the enthusiastic and optimistic ENFP.
+Gewürztraminer: Aromatic and expressive, appealing to the creative and spontaneous ENFP.
+Malbec: Bold and inviting, suitable for the lively and adventurous ENFP.
+
+ENTJ:
+Shiraz: Bold and authoritative, fitting the commanding and dynamic ENTJ.
+Nebbiolo: Complex and prestigious, resonating with the strategic and efficient nature of ENTJs.
+Bordeaux: Traditional and powerful, suitable for the leadership-driven and assertive ENTJ.
+
+ENTP:
+Zinfandel: Bold and unconventional, matching the innovative and resourceful ENTP.
+Sauvignon Blanc: Crisp and perceptive, appealing to the quick-witted and ingenious ENTP.
+Barbera: Distinctive and lively, aligning with the enterprising and clever nature of ENTPs.
+
+ISTJ:
+Bordeaux: Classic and reliable, fitting the responsible and serious ISTJ.
+Sauvignon Blanc: Crisp and direct, matching the ISTJ's straightforward nature.
+Cabernet Franc: Offers complexity and a sense of order, appealing to the structured ISTJ.
+
+ISFJ:
+Merlot: Approachable and harmonious, suitable for the supportive and reliable ISFJ.
+Chardonnay: Unoaked for a smoother, less complex profile, aligning with the ISFJ's preference for simplicity.
+Pinot Grigio: Light and easy-going, matching the ISFJ's modest and warm nature.
+
+ISTP:
+Shiraz: Bold and secretive, fitting the analytical and observant ISTP.
+Cabernet Sauvignon: Full-bodied with a robust character, suitable for the logical and straightforward ISTP.
+Malbec: Rich and deep, appealing to the ISTP's adventurous side.
+
+ISFP:
+Riesling: Sweet or dry with delicate nuances, fitting the sensitive and artistic ISFP.
+Rosé: Versatile and expressive, aligning with the ISFP's adaptable and charming traits.
+Pinot Noir: Subtle and complex, suitable for the ISFP's gentle and considerate nature.
+
+INTJ:
+Cabernet Sauvignon: Complex and well-structured, appealing to the INTJ's love for strategy and depth.
+Barolo: Known for its depth and intellectual appeal, aligning with the INTJ's analytical mind.
+Bordeaux: Classic, reflecting INTJ's appreciation for high-quality, well-crafted wines with a rich history.
+
+INTP:
+Pinot Noir: Offers complexity and nuance, matching the INTP's love for problem-solving and analysis.
+Chenin Blanc: Versatile and intellectual, suitable for the INTP's curiosity and innovative spirit.
+Riesling: Variable from dry to sweet, appealing to the INTP's flexibility and thirst for knowledge.
+
+INFJ:
+Merlot: Balanced and harmonious, resonating with INFJ's empathetic and introspective nature.
+Pinot Grigio: Subtle and delicate, suitable for the gentle and caring INFJ.
+Syrah: Intense and meaningful, aligning with the depth of feeling in INFJs.
+
+INFP:
+Moscato: Sweet and imaginative, matching the INFP's idealistic and dreamy personality.
+Rosé: Light-hearted and versatile, reflecting the adaptable and compassionate nature of INFPs.
+Grenache: Rich and somewhat spicy, catering to the INFP's passionate and slightly mysterious side.
+
