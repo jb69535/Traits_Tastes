@@ -20,7 +20,7 @@ jobs:
       run: npm run build --if-present
       working-directory: ./client
 
-    - name: Deploy
+    - name: Deploy  
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         ACCESS_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
