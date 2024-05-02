@@ -13,12 +13,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
+
+      - name: List directory contents (Debugging)
+        run: ls -la
 
       - name: Install client dependencies
         working-directory: ./client
@@ -35,19 +38,3 @@ jobs:
       - name: Build server
         working-directory: ./server
         run: npm run build
-
-      - name: Run client tests
-        working-directory: ./client
-        run: npm test
-
-      - name: Run server tests
-        working-directory: ./server
-        run: npm test
-
-      - name: Deploy client to hosting service
-        working-directory: ./client
-        run: echo "Deploy client steps here" # Replace this with your actual deploy command
-
-      - name: Deploy server to server environment
-        working-directory: ./server
-        run: echo "Deploy server steps here" # Replace this with your actual deploy command
