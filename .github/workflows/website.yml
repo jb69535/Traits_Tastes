@@ -20,10 +20,10 @@ jobs:
       run: npm run build --if-present
       working-directory: ./client
 
-    - name: Deploy  
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        ssh-key: ${{ secrets.MY_GITHUB_PAT }}
+        folder: site
+        ssh-key: ${{ secrets.MY_GIYHUB_PAT }}
         BRANCH: gh-pages
-        FOLDER: client/build
         CLEAN: true
