@@ -14,16 +14,16 @@ jobs:
 
     - name: Install Dependencies
       run: npm install
-      working-directory: ./client  # Set the working directory to client
+      working-directory: ./client
 
     - name: Build
       run: npm run build --if-present
-      working-directory: ./client  # Set the working directory to client
+      working-directory: ./client
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        token: ${{ secrets.MY_GITHUB_PAT }}  # Using the correct secret name for your PAT
-        branch: gh-pages  # The branch the action should deploy to
-        folder: client/build  # The folder the action should deploy
-        clean: true  # Automatically remove deleted files from the deploy branch
+        ACCESS_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
+        BRANCH: gh-pages
+        FOLDER: client/build
+        CLEAN: true
