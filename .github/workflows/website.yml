@@ -23,6 +23,6 @@ jobs:
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: build
+        folder: client/build
         ACCESS_TOKEN: ${{ secrets.MY_GIYHUB_PAT }}
         CLEAN: true
