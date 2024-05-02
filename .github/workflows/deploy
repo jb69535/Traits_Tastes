@@ -1,0 +1,35 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build client
+        run: npm run build --prefix client
+
+      - name: Build server
+        run: npm run build --prefix server
+
+      - name: Deploy to Server
+        run: echo "Deploy steps here"
+
+      - name: Deploy client to Static Site Hosting
+        run: echo "Static deploy steps here"
