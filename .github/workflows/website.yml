@@ -23,7 +23,7 @@ jobs:
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: site
+        folder: ./client/build
         ssh-key: ${{ secrets.MY_GIYHUB_PAT }}
         BRANCH: gh-pages
         CLEAN: true
