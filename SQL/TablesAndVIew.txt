@@ -1,0 +1,74 @@
+CREATE TABLE `WineCharacteristics` (
+  `CharacteristicsID` int NOT NULL AUTO_INCREMENT,
+  `WineID` int DEFAULT NULL,
+  `Description` text,
+  `Characteristics` text,
+  `TypeID` int DEFAULT NULL,
+  `StyleID` int DEFAULT NULL,
+  PRIMARY KEY (`CharacteristicsID`),
+  KEY `WineID` (`WineID`),
+  KEY `TypeID` (`TypeID`),
+  KEY `StyleID` (`StyleID`),
+  CONSTRAINT `winecharacteristics_ibfk_1` FOREIGN KEY (`WineID`) REFERENCES `WineDetails` (`WineID`) ON DELETE CASCADE,
+  CONSTRAINT `winecharacteristics_ibfk_2` FOREIGN KEY (`TypeID`) REFERENCES `WineTypes` (`TypeID`),
+  CONSTRAINT `winecharacteristics_ibfk_3` FOREIGN KEY (`StyleID`) REFERENCES `WineStyles` (`StyleID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2539 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `WineDetails` (
+  `WineID` int NOT NULL AUTO_INCREMENT,
+  `Title` varchar(255) DEFAULT NULL,
+  `Grape` varchar(100) DEFAULT NULL,
+  `SecondaryGrapeVarieties` varchar(255) DEFAULT NULL,
+  `Closure` varchar(50) DEFAULT NULL,
+  `Country` varchar(100) DEFAULT NULL,
+  `Region` varchar(100) DEFAULT NULL,
+  `Appellation` varchar(100) DEFAULT NULL,
+  `Type` varchar(50) DEFAULT NULL,
+  `Style` varchar(100) DEFAULT NULL,
+  `Vintage` varchar(50) DEFAULT NULL,
+  `Price` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`WineID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3315 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `WinePricingVolume` (
+  `PricingVolumeID` int NOT NULL AUTO_INCREMENT,
+  `WineID` int DEFAULT NULL,
+  `Capacity` varchar(50) DEFAULT NULL,
+  `Price` varchar(50) DEFAULT NULL,
+  `Unit` float DEFAULT NULL,
+  `ABV` varchar(50) DEFAULT NULL,
+  `Per_bottle_Case_Each` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`PricingVolumeID`),
+  KEY `WineID` (`WineID`),
+  CONSTRAINT `winepricingvolume_ibfk_1` FOREIGN KEY (`WineID`) REFERENCES `WineDetails` (`WineID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4096 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `WineSearchCounts` (
+  `wineID` int NOT NULL,
+  `searchCount` int DEFAULT NULL,
+  `weekOfYear` int NOT NULL,
+  `year` int NOT NULL,
+  PRIMARY KEY (`wineID`,`weekOfYear`,`year`),
+  CONSTRAINT `winesearchcounts_ibfk_1` FOREIGN KEY (`wineID`) REFERENCES `WineDetails` (`WineID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `WineStyles` (
+  `StyleID` int NOT NULL AUTO_INCREMENT,
+  `Style` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`StyleID`),
+  UNIQUE KEY `Style` (`Style`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `WineTypes` (
+  `TypeID` int NOT NULL AUTO_INCREMENT,
+  `Type` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`TypeID`),
+  UNIQUE KEY `Type` (`Type`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
+`currentweekranking` AS select `winesearchcounts`.`wineID` AS `wineId`,
+`winesearchcounts`.`searchCount` AS `searchCount` 
+from `winesearchcounts` where ((`winesearchcounts`.`weekOfYear` = week(curdate(),1)) 
+and (`winesearchcounts`.`year` = year(curdate()))) 
+order by `winesearchcounts`.`searchCount` desc
