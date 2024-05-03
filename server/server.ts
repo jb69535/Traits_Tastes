@@ -9,6 +9,7 @@ import {
   CountResult,
   WineDetails,
   getWinePreferencesByMBTI,
+  WinePricingVolume,
 } from "./types/interfaces";
 
 const app = express();
@@ -42,9 +43,13 @@ function getCurrentWeekNumber() {
 }
 
 app.get("/search-wines", (req: Request, res: Response) => {
+  console.log("Received request with query params:", req.query);
+
   const searchTerm = req.query.search as string;
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;
+  const sortBy = (req.query.sortBy as string) || "Title"; // Default sorting by title
+  const filterBy = req.query.filterBy as string; // Filter parameter
   const offset = (page - 1) * limit;
 
   if (!searchTerm) {
@@ -52,14 +57,35 @@ app.get("/search-wines", (req: Request, res: Response) => {
     return;
   }
 
-  const likeTerm = `%${searchTerm}%`;
-  const countQuery = `SELECT COUNT(*) AS total FROM WineDetails WHERE 
-      Title LIKE ? OR Grape LIKE ? OR Country LIKE ? OR 
-      Region LIKE ? OR Appellation LIKE ? OR Type LIKE ? OR 
-      Style LIKE ? OR Vintage LIKE ?`;
+  console.log(
+    `Processing search for term: ${searchTerm}, page: ${page}, limit: ${limit}, sortBy: ${sortBy}, filterBy: ${filterBy}`
+  );
 
-  db.query(countQuery, Array(8).fill(likeTerm), (error, results) => {
+  const likeTerm = `%${searchTerm}%`;
+  const whereClause = filterBy
+    ? `(wd.Title LIKE ? OR wd.Grape LIKE ? OR wd.Country LIKE ? OR wd.Region LIKE ? OR wd.Appellation LIKE ?) AND wd.Type = ?`
+    : `wd.Title LIKE ? OR wd.Grape LIKE ? OR wd.Country LIKE ? OR wd.Region LIKE ? OR wd.Appellation LIKE ?`;
+
+  const orderClause =
+    sortBy === "priceHighToLow"
+      ? "ORDER BY wpv.Price DESC"
+      : sortBy === "priceLowToHigh"
+      ? "ORDER BY wpv.Price ASC"
+      : "ORDER BY wd.Title ASC"; // Sorting
+
+  const countParams = filterBy
+    ? [...Array(5).fill(likeTerm), filterBy]
+    : Array(5).fill(likeTerm);
+  const countQuery = `SELECT COUNT(*) AS total FROM WineDetails wd
+      LEFT JOIN WinePricingVolume wpv ON wd.WineID = wpv.WineID
+      WHERE ${whereClause}`;
+
+  console.log("Count Query:", countQuery);
+  console.log("Count Parameters:", countParams);
+
+  db.query(countQuery, countParams, (error, results) => {
     if (error) {
+      console.error("Error during count query:", error);
       return res.status(500).send("Error occurred: " + error.message);
     }
 
@@ -67,26 +93,32 @@ app.get("/search-wines", (req: Request, res: Response) => {
     const totalItems = countResults[0].total;
     const totalPages = Math.ceil(totalItems / limit);
 
-    const query = `SELECT * FROM WineDetails WHERE 
-        Title LIKE ? OR Grape LIKE ? OR Country LIKE ? OR 
-        Region LIKE ? OR Appellation LIKE ? OR Type LIKE ? OR 
-        Style LIKE ? OR Vintage LIKE ? LIMIT ? OFFSET ?`;
+    console.log(`Total items: ${totalItems}, Total pages: ${totalPages}`);
 
-    db.query(
-      query,
-      [...Array(8).fill(likeTerm), limit, offset],
-      (error, dataResults) => {
-        if (error) {
-          return res.status(500).send("Error occurred: " + error.message);
-        }
-        res.json({
-          data: dataResults as WineDetails[], // Cast to WineDetails[]
-          totalItems,
-          totalPages,
-          currentPage: page,
-        });
+    const queryParams = filterBy
+      ? [...Array(5).fill(likeTerm), filterBy, limit, offset]
+      : [...Array(5).fill(likeTerm), limit, offset];
+    const dataQuery = `SELECT wd.WineID, wd.Title, wd.Grape, wd.Country, wd.Region, 
+        wd.Appellation, wd.Type, wd.Style, wd.Vintage, wpv.Price FROM WineDetails wd
+        LEFT JOIN WinePricingVolume wpv ON wd.WineID = wpv.WineID
+        WHERE ${whereClause} ${orderClause} LIMIT ? OFFSET ?`;
+
+    console.log("Data Query:", dataQuery);
+    console.log("Query Parameters:", queryParams);
+
+    db.query(dataQuery, queryParams, (error, dataResults) => {
+      if (error) {
+        console.error("Error during data query:", error);
+        return res.status(500).send("Error occurred: " + error.message);
       }
-    );
+      console.log("Data Results:", dataResults);
+      res.json({
+        data: dataResults as WineDetails[], // Cast to WineDetails[]
+        totalItems,
+        totalPages,
+        currentPage: page,
+      });
+    });
   });
 });
 

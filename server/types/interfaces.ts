@@ -18,6 +18,12 @@ export interface WineDetails {
   Vintage: string;
 }
 
+export interface WinePricingVolume {
+  WineID: number;
+  Price: number;
+}
+
+
 // Define a type for MBTI preferences mapping
 type MBTIPreferences = { [key: string]: string[] };
 

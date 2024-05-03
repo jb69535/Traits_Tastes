@@ -1,3 +1,5 @@
+/* Searchbar.css */
+
 /* Global Styles & Variables */
 :root {
   /* Colors */
@@ -29,11 +31,19 @@
 }
 
 /* Layout */
+
+.main__container {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  background-color: var(--color-grey-white);
+}
+
 .search__container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;  /* Full width */
+  min-width: 100%;
   max-width: 800px;  /* Maximum width of the search container */
   margin: auto;  /* Center align the container */
   padding: 20px;
@@ -76,21 +86,6 @@ input[type="text"] {
   background-color: var(--color-Soft-Gold);
 }
 
-.sortBy {
-  margin: 5px;
-  padding: 10px;
-  flex-basis: 20%;  /* Button takes less space */
-  border-radius: var(--size-border-radius);
-  background-color: var(--color-rich-Burgundy);
-  color: var(--color-white);
-  border: none;
-  cursor: pointer;
-}
-
-.sortBy:hover {
-  background-color: var(--color-Soft-Gold);
-}
-
 
 /* Dropdown */
 .dropdown {
@@ -116,37 +111,45 @@ input[type="text"] {
   background-color: var(--color-Creamy-Beige);
 }
 
-/* Sorting Dropdown and Button */
-.sort__controls {
+/* sidebar controls */
+/* Sidebar Styles */
+
+.sidebar {
+  height: fit-content;
+  position: fixed;  /* Make sidebar stick to the side of the screen */
+  right: 0;
+  background-color: var(--color-grey-white);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.sort__dropdown, .sort__toggle {
-  margin-right: 5px;
-  height: fit-content;
+  padding: 20px;
   border-radius: var(--size-border-radius);
-  border: 2px solid var(--color-rich-Burgundy);
-  background-color: var(--color-white);
+}
+
+.sidebar h2 {
+  margin-top: 0;
   color: var(--color-Dark-Charcoal);
+  border-bottom: 1px solid var(--color-light-grey);
+}
+
+.sidebar li {
+  list-style: none;
+  font-size: var(--font-regular);
+  padding: 3px;
+  margin:  0;
+  border-radius: var(--size-border-radius);
   cursor: pointer;
-  width: fit-content;
+  transition: background-color var(--animation-duration) ease;
 }
 
-.sort__dropdown:focus, .sort__toggle:focus {
-  outline: none;
-  border-color: var(--color-Soft-Gold);
+.sidebar li:hover {
+  border-bottom: 1px solid var(--color-light-grey);
 }
 
-.sort__toggle {
+.sidebar li.active {
+  font-weight: var(--weight-bold);
   background-color: var(--color-rich-Burgundy);
   color: var(--color-white);
-}
-
-.sort__toggle:hover {
-  background-color: var(--color-Soft-Gold);
-  color: var(--color-Dark-Charcoal);
 }
 
 
@@ -217,6 +220,7 @@ input[type="text"] {
   color: var(--color-white);
 }
 
+
 /* Media Queries */
 @media (max-width: 768px) {
   .search__container {
@@ -236,5 +240,6 @@ input[type="text"] {
     padding: 3px 8px; /* Smaller padding on smaller screens */
     min-width: 30px; /* Smaller minimum width on smaller screens */
   }
+
 }
 

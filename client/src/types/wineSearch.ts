@@ -13,6 +13,7 @@ export type Wine = {
     Type: string;
     Style: string;
     Vintage: string;
+    Price: number;
     characteristics: string;
     imageUrl: string;
   };

@@ -30,6 +30,8 @@ const Searchbar: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [resultsPerPage] = useState<number>(10);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [sortBy, setSortBy] = useState<string>(""); // State for sorting criteria
+  const [filterBy, setFilterBy] = useState<string>(""); // State for filtering criteria
 
   const fetchWines = async (
     query: string,
@@ -46,9 +48,10 @@ const Searchbar: React.FC = () => {
 
     setIsLoading(true);
     setError("");
+    // Include both sortBy and filterBy in the request URL
     const url = `http://localhost:3001/search-wines?search=${encodeURIComponent(
-      query
-    )}&page=${page}&limit=${resultsPerPage}`;
+      searchTerm
+    )}&page=${currentPage}&limit=${resultsPerPage}&sortBy=${sortBy}&filterBy=${filterBy}`;
 
     try {
       const response = await fetch(url);
@@ -154,6 +157,91 @@ const Searchbar: React.FC = () => {
     window.open(url, "_blank");
   };
 
+  const Sidebar = () => {
+    const handleSortChange = (value: string) => {
+      setSortBy(value);
+      fetchWines(searchTerm, 1, false); // Refetch the wines with the new sort order
+      console.log("Sort BY: ", value);
+    };
+
+    const handleFilterChange = (value: string) => {
+      setFilterBy(value);
+      console.log("Filtering by: ", value, "Country: ", searchTerm);
+      fetchWines(searchTerm, 1, false); // Refetch the wines with the new filter
+      console.log(wines);
+    };
+    return (
+      <div className="sidebar">
+        <ul>
+          <h4>Sort By:</h4>
+          <li
+            onClick={() => handleSortChange("")}
+            className={sortBy === "Title" ? "active" : ""}
+          >
+            Default
+          </li>
+          <li
+            onClick={() => handleSortChange("priceHighToLow")}
+            className={sortBy === "priceHighToLow" ? "active" : ""}
+          >
+            Price High to Low
+          </li>
+          <li
+            onClick={() => handleSortChange("priceLowToHigh")}
+            className={sortBy === "priceLowToHigh" ? "active" : ""}
+          >
+            Price Low to High
+          </li>
+        </ul>
+        <ul>
+          <h4>Type</h4>
+          <li
+            onClick={() => handleFilterChange("")}
+            className={filterBy === "Type" ? "active" : ""}
+          >
+            Default
+          </li>
+          <li
+            onClick={() => handleFilterChange("Brown")}
+            className={filterBy === "Brown" ? "active" : ""}
+          >
+            Brown
+          </li>
+          <li
+            onClick={() => handleFilterChange("Orange")}
+            className={filterBy === "Orange" ? "active" : ""}
+          >
+            Orange
+          </li>
+          <li
+            onClick={() => handleFilterChange("Red")}
+            className={filterBy === "Red" ? "active" : ""}
+          >
+            Red
+          </li>
+          <li
+            onClick={() => handleFilterChange("Rose")}
+            className={filterBy === "Rose" ? "active" : ""}
+          >
+            Rose
+          </li>
+          <li
+            onClick={() => handleFilterChange("Tawny")}
+            className={filterBy === "Tawny" ? "active" : ""}
+          >
+            Tawny
+          </li>
+          <li
+            onClick={() => handleFilterChange("White")}
+            className={filterBy === "White" ? "active" : ""}
+          >
+            White
+          </li>
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div className="search__container">
       <img className="mainLogo" src={FontLogo} alt="logo" />
@@ -230,6 +318,7 @@ const Searchbar: React.FC = () => {
           Last
         </button>
       </div>
+      <Sidebar />
     </div>
   );
 };
