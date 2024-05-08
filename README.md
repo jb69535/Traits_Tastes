@@ -28,11 +28,11 @@ In the project directory, you can run:
     }
 
 Runs the app in the development mode.\
-The page will reload if you make edits.\
+The page will reload if you make edits.
 
 ## * Use provided database to run from your localhost
 
-From termproject.sql, 
+From the terminal, 
 do 
 ```sql
 mysql -u username -p < termproject.sql
