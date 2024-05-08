@@ -43,6 +43,7 @@ function getCurrentWeekNumber() {
         86400000;
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 }
+// Search wines endpoint. Search by title, grape, country, region, appellation. Do advanced search using sorting and filtering.
 app.get("/search-wines", (req, res) => {
     console.log("Received request with query params:", req.query);
     const searchTerm = req.query.search;
@@ -106,6 +107,7 @@ app.get("/search-wines", (req, res) => {
         });
     });
 });
+// Get weekly rankings endpoint.
 app.get("/weekly-rankings", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const query = `
@@ -124,6 +126,7 @@ app.get("/weekly-rankings", (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).send("Error fetching weekly rankings");
     }
 }));
+// Record wine selection endpoint. Record the wine selection made by the user.
 app.post("/record-selection", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { wineId } = req.body;
     const weekOfYear = getCurrentWeekNumber();
