@@ -13,19 +13,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Additional imports
 const express_1 = __importDefault(require("express"));
 const mysql2_1 = __importDefault(require("mysql2"));
+require("dotenv/config");
 const cors_1 = __importDefault(require("cors"));
+const path_1 = __importDefault(require("path"));
 const interfaces_1 = require("./types/interfaces");
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+// Configuring CORS to accept requests from your domain
+app.use((0, cors_1.default)({
+    origin: "https://www.traitstastes.com", // This should be placed before other route handlers
+}));
 app.use(express_1.default.json());
 const db = mysql2_1.default.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Junmysql99!",
-    database: "Traits_Tastes",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
 });
 db.connect((err) => {
     if (err) {
@@ -175,6 +179,10 @@ app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(500).send("Error fetching recommendations");
     }
 }));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/build')));
+app.get('*', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../client/build', 'index.html'));
+});
 app.listen(3001, () => {
     console.log("Server running on http://localhost:3001");
 });

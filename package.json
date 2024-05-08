@@ -1,0 +1,15 @@
+{
+    "name": "traits_tastes",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "install:client": "cd client && npm install",
+      "install:server": "cd server && npm install",
+      "build:client": "cd client && npm run build",
+      "build:server": "cd server && npm run build",
+      "start:server": "cd server && npm start",
+      "start:client": "cd client && npm start",
+      "start": "npm run build:client && npm run start:server",
+      "deploy": "npm run build:client && npm run build:server && npm run start:server"
+    }
+}

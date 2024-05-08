@@ -1,10 +1,11 @@
 // server.ts
 
-// Additional imports
-import express from "express";
+import express, { Request, Response } from "express";
 import mysql from "mysql2";
-import { Request, Response } from "express";
+import "dotenv/config";
 import cors from "cors";
+import path from "path";
+
 import {
   CountResult,
   WineDetails,
@@ -13,14 +14,21 @@ import {
 } from "./types/interfaces";
 
 const app = express();
-app.use(cors());
+
+// Configuring CORS to accept requests from your domain
+app.use(
+  cors({
+    origin: "https://www.traitstastes.com", // This should be placed before other route handlers
+  })
+);
+
 app.use(express.json());
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Junmysql99!",
-  database: "Traits_Tastes",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
 
 db.connect((err) => {
@@ -31,7 +39,7 @@ db.connect((err) => {
   console.log("Connected to database!");
 });
 
-function getCurrentWeekNumber() {
+function getCurrentWeekNumber(): number {
   const today = new Date();
   const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
   const pastDaysOfYear =
@@ -197,6 +205,12 @@ app.post("/api/recommendations", async (req: Request, res: Response) => {
     console.error("Error fetching recommendations:", error);
     res.status(500).send("Error fetching recommendations");
   }
+});
+
+app.use(express.static(path.join(__dirname, '../../client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
 });
 
 app.listen(3001, () => {
