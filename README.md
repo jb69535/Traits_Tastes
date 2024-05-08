@@ -30,7 +30,9 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 The page will reload if you make edits.
 
-## * Use provided database to run from your localhost
+## * Use provided database termproject.sql to import into your server.
+
+Un-zip the termproject.sql zip file
 
 From the terminal, 
 do 
