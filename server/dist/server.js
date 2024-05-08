@@ -183,6 +183,7 @@ app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/bu
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../../client/build', 'index.html'));
 });
-app.listen(3001, () => {
-    console.log("Server running on http://localhost:3001");
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
