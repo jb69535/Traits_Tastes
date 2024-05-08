@@ -51,7 +51,8 @@ The username should be replaced with the actual username of the MySQL user who h
 and termproject.sql should be the actual path to the SQL dump file that you want to import.
 
 
-
+## * If any error occurs
+Download @typescript, @npm, or any dependencies that your local or global doesn't have!!
 
 
 
