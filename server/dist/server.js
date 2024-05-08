@@ -13,6 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Server module for handling API requests and interacting with a MySQL database.
+ *
+ * @remarks
+ * This module sets up an Express server with CORS, JSON body parsing, and MySQL database connection. It provides several endpoints for searching wines, fetching weekly rankings, recording wine selections, and generating wine recommendations based on MBTI results. It also serves static files for the client-side application.
+ *
+ * @module
+ */
 const express_1 = __importDefault(require("express"));
 const mysql2_1 = __importDefault(require("mysql2"));
 require("dotenv/config");
@@ -20,17 +28,29 @@ const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const interfaces_1 = require("./types/interfaces");
 const app = (0, express_1.default)();
+/**
+ * CORS configuration to accept requests from a specified domain.
+ */
 // Configuring CORS to accept requests from your domain
 app.use((0, cors_1.default)({
     origin: "https://www.traitstastes.com", // This should be placed before other route handlers
 }));
+/**
+ * JSON middleware to parse JSON request bodies.
+ */
 app.use(express_1.default.json());
+/**
+ * Establishes a connection to the MySQL database using environment variables for configuration.
+ */
 const db = mysql2_1.default.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
 });
+/**
+ * Connects to the database and logs the connection status.
+ */
 db.connect((err) => {
     if (err) {
         console.error("An error occurred while connecting to the DB:", err);
@@ -38,6 +58,10 @@ db.connect((err) => {
     }
     console.log("Connected to database!");
 });
+/**
+ * Calculates the current week number of the year.
+ * @returns The current week number.
+ */
 function getCurrentWeekNumber() {
     const today = new Date();
     const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
@@ -47,6 +71,10 @@ function getCurrentWeekNumber() {
         86400000;
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
 }
+/**
+ * API endpoint for searching wines with sorting and filtering options.
+ * Supports pagination and detailed query parameters for advanced searches.
+ */
 // Search wines endpoint. Search by title, grape, country, region, appellation. Do advanced search using sorting and filtering.
 app.get("/search-wines", (req, res) => {
     console.log("Received request with query params:", req.query);
@@ -111,6 +139,9 @@ app.get("/search-wines", (req, res) => {
         });
     });
 });
+/**
+ * API endpoint to fetch the top 5 wines based on search popularity for the current week.
+ */
 // Get weekly rankings endpoint.
 app.get("/weekly-rankings", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -130,6 +161,10 @@ app.get("/weekly-rankings", (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).send("Error fetching weekly rankings");
     }
 }));
+/**
+ * API endpoint to record a user's wine selection.
+ * Updates search counts in the database for the selected wine.
+ */
 // Record wine selection endpoint. Record the wine selection made by the user.
 app.post("/record-selection", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { wineId } = req.body;
@@ -148,6 +183,10 @@ app.post("/record-selection", (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(200).send("Selection recorded successfully");
     });
 }));
+/**
+ * API endpoint to fetch wine recommendations based on a user's MBTI result.
+ * Selects wines matching the personality-derived preferences.
+ */
 // POST endpoint to receive answers and return wine recommendations
 app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const mbti = req.body.mbti; // MBTI result from the client
@@ -156,7 +195,7 @@ app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0,
         return;
     }
     try {
-        const winePreferences = (0, interfaces_1.getWinePreferencesByMBTI)(mbti); // Assuming you have a function that maps MBTI to wine preferences
+        const winePreferences = (0, interfaces_1.getWinePreferencesByMBTI)(mbti); // Get wine preferences based on MBTI
         // Construct the SQL query to select wines only from the specified grape preferences
         const placeholders = winePreferences.map(() => "?").join(","); // Generate placeholders
         const query = `
@@ -179,10 +218,19 @@ app.post("/api/recommendations", (req, res) => __awaiter(void 0, void 0, void 0,
         res.status(500).send("Error fetching recommendations");
     }
 }));
+/**
+ * Serves static files from the client build directory, providing SPA support.
+ */
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/build')));
+/**
+ * Fallback route handler to serve the client's index.html for any unmatched routes.
+ */
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../../client/build', 'index.html'));
 });
+/**
+ * Starts the server on the specified port.
+ */
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

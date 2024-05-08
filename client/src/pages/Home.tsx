@@ -6,6 +6,13 @@ import "../style/pages/home.css";
 import Searchbar from "../components/Searchbar";
 import Rankings from "../components/Rankings";
 
+
+/**
+ * Home page component that combines various subcomponents and sections including a search bar, rankings, about information, and contact details.
+ * 
+ * @remarks
+ * This component acts as the main entry point for users, presenting key sections of the website. It uses the Searchbar and Rankings components to provide functionality, alongside descriptive sections about the service and contact information.
+ */
 const Home: React.FC = () => {
   return (
     <div>

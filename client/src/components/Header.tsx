@@ -6,6 +6,17 @@ import "../style/components/header.css";
 import FontLogo from "../assets/FontLgoBGRemove.svg";
 import { Link } from "react-router-dom";
 
+
+/**
+ * Navigation header component with responsive menu options.
+ * 
+ * @remarks
+ * This component includes a navigation bar with links to different sections of the application. It supports smooth scrolling to sections and a toggleable menu for smaller screens.
+ * 
+ * @property isOpen - State to track if the mobile navigation menu is open.
+ * @method toggleMenu - Toggles the visibility of the mobile navigation menu.
+ * @method scrollToSection - Scrolls to the specified page section smoothly when a menu item is clicked.
+ */
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 

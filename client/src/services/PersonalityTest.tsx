@@ -6,6 +6,33 @@
 // For example, if a user chooses more A answers in the E vs. I aligned questions,
 // they would lean towards Extraversion (E). You do this for each set of dichotomy-aligned questions.
 
+
+/**
+ * Data structure representing a series of questions for a personality test, specifically designed to evaluate preferences in wine and social interactions.
+ * 
+ * @remarks
+ * This array contains questions each identified by an ID, with a text describing the question, and an `answers` object. The `answers` object contains two properties: `trueText` and `falseText` which represent the responses aligned with different MBTI dichotomies. The choice between `trueText` and `falseText` helps determine the user's inclination towards certain personality traits.
+ * 
+ * @property id - A unique identifier for the question.
+ * @property text - The question text presented to the user.
+ * @property answers - An object containing the responses:
+ *   - `trueText`: Represents a choice that aligns with one personality trait (e.g., Extraversion).
+ *   - `falseText`: Represents a choice that aligns with the opposing personality trait (e.g., Introversion).
+ * 
+ * Each question is designed to contribute to the assessment of the user's personality type, which can influence their preferences in wine tasting and social scenarios.
+ * 
+ * Example Usage:
+ * ```typescript
+ * {
+ *   id: 0,
+ *   text: "When attending a social event, you usually...",
+ *   answers: {
+ *     trueText: "Enjoy mingling and meeting new people.",
+ *     falseText: "Stick to discussing familiar topics with close friends.",
+ *   }
+ * }
+ * ```
+ */
 export const questions = [
   {
     id: 0,

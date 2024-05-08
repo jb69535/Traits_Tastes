@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["/client/src"],  // Specifies the main TypeScript file to document.
+  "out": "docs",                    // Sets the output directory for the generated HTML files.
+  "name": "TraitsTastes",      // Names your project in the generated documentation.
+  "theme": "default"                // Uses the default theme for the documentation layout.
+}
+

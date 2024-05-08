@@ -6,6 +6,19 @@ import { useState, useEffect } from "react";
 import { Wine } from "../types/wineSearch";
 import "../style/components/rankings.css";
 
+
+/**
+ * Displays a list of weekly wine rankings.
+ * 
+ * @remarks
+ * This component fetches and displays a list of wines ranked based on weekly data. Each list item includes wine details and a button to shop for the wine. It handles state for loading, errors, and the fetched rankings data.
+ * 
+ * @property rankings - State to hold the array of wines ranked weekly.
+ * @property isLoading - State to indicate whether the rankings data is being fetched.
+ * @property error - State to store error information if the fetch fails.
+ * 
+ * @method handleShopClick - Opens a new tab with a Google Shopping search for the selected wine.
+ */
 const Rankings: React.FC = () => {
   const [rankings, setRankings] = useState<Wine[]>([]); // Add type annotation for rankings state variable
   const [isLoading, setIsLoading] = useState(true);

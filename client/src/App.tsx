@@ -7,6 +7,14 @@ import Footer from './components/Footer';
 import PersonalityTestPage from './pages/PersonalityTestPage';
 import Home from './pages/Home';
 
+
+/**
+ * Main application component responsible for setting up the router and defining the application's navigation structure.
+ * 
+ * @remarks
+ * This component uses React Router to define routes for the application. It serves as the root component that includes the `Header` and `Footer` components, which are displayed on every page. Routes are defined for the `Home` page and the `PersonalityTestPage`. This setup facilitates navigation between different sections of the application without page reloads, enhancing user experience with smooth transitions and maintaining state across navigation.
+ *  
+ * */
 function App() {
   return (
     <Router>

@@ -15,6 +15,23 @@ import { calculateMBTIResult } from "../services/MBTICalculator";
 import "../style/pages/personalitytestpage.css";
 import mainLogo from "../assets/MainLogo_BGRemove.svg";
 
+
+/**
+ * Component for conducting a personality test based on user responses to questions, leading to personalized wine recommendations.
+ * 
+ * @remarks
+ * This component manages the state for the current question index, user answers, test submission status, and resulting MBTI type. It leverages the QuestionCard and WineCard components to interact with the user and display results.
+ * 
+ * @property currentQuestionIndex - State tracking the index of the current question being displayed.
+ * @property answers - State storing the user's answers as a dictionary.
+ * @property testSubmitted - State indicating whether the test has been submitted.
+ * @property mbtiResult - State holding the calculated MBTI result from the user's answers.
+ * 
+ * @method handleAnswer - Handles the selection of an answer for the current question.
+ * @method changeQuestion - Navigates between questions.
+ * @method handleSubmit - Submits the completed test and calculates the MBTI result.
+ * @method refreshTest - Resets the test to its initial state for a new session.
+ */
 const PersonalityTestPage: React.FC = () => {
   // State for tracking the current question index and the answers collected
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

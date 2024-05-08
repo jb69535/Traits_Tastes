@@ -21,6 +21,31 @@ function debounce(
   };
 }
 
+
+
+/**
+ * Search component for querying and displaying wine recommendations.
+ * 
+ * @remarks
+ * This component allows the user to search for wines based on various criteria, display the results, and paginate through them. It also includes functionality to debounce search input to reduce the frequency of API calls.
+ * 
+ * @property searchTerm - State to hold the current search input.
+ * @property wines - State to store the list of wine results.
+ * @property filteredWines - State to store a subset of results for dropdown suggestions.
+ * @property isLoading - State indicating if the search query is in progress.
+ * @property error - State to hold any error messages from search operations.
+ * @property currentPage - State to track the current page of search results.
+ * @property totalPages - State to track the total number of pages available.
+ * @property sortBy - State to manage the sorting of search results.
+ * @property filterBy - State to manage the filtering of search results.
+ * 
+ * @method fetchWines - Fetches wines based on the search term and pagination, with optional sorting and filtering.
+ * @method handleInputChange - Updates the search term and triggers a debounced search operation.
+ * @method handleSearch - Executes a search when the form is submitted.
+ * @method handleSelect - Handles selection of a wine from the dropdown, updating the search term and fetching its details.
+ * @method handlePageChange - Changes the current page of results.
+ * @method handleShopClick - Opens a new tab for shopping for the selected wine.
+ */
 const Searchbar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [wines, setWines] = useState<Wine[]>([]);

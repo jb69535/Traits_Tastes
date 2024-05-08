@@ -2,6 +2,19 @@
 // Author: Jun Beom
 // Calculate MBTI result based on user's answers
 
+
+/**
+ * Calculates an MBTI result based on the given answers to personality test questions.
+ * 
+ * @remarks
+ * This function interprets a set of boolean answers to determine the MBTI type. It employs a scoring system based on predefined dichotomy indices, calculating the dominance of each MBTI trait.
+ * 
+ * @param answers - A dictionary of question IDs mapped to boolean values representing the user's answers.
+ * @returns The calculated MBTI type as a string.
+ * 
+ * @throws {Error} Throws an error if there are inconsistencies in the question IDs or dichotomy definitions.
+ */
+
 export const calculateMBTIResult = (answers: {
     [key: string]: boolean;
   }): string => {

@@ -24,6 +24,23 @@ interface QuestionCardProps {
   testSubmitted: boolean; // Pass the testSubmitted state
 }
 
+/**
+ * Represents a single quiz question with answers and navigation controls.
+ * 
+ * @remarks
+ * This component displays a question text, answer buttons, and navigational buttons like previous, next, and submit.
+ * 
+ * @param props - The props for the QuestionCard component.
+ * @param props.question - The question object containing the ID, text, and answers.
+ * @param props.onAnswer - Function to handle when an answer is selected.
+ * @param props.onNext - Function to navigate to the next question.
+ * @param props.onPrevious - Function to navigate to the previous question.
+ * @param props.onSubmit - Function to submit the quiz.
+ * @param props.canGoBack - Boolean indicating if the user can navigate to the previous question.
+ * @param props.isLast - Boolean indicating if this is the last question in the quiz.
+ * @param props.testSubmitted - Boolean indicating if the test has been submitted.
+ */
+
 const QuestionCard: React.FC<QuestionCardProps> = ({
   question,
   onAnswer,

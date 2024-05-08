@@ -17,6 +17,19 @@ interface WineCardProps {
   mbtiResult: string | null;
 }
 
+/**
+ * Displays wine recommendations based on the MBTI result and provides sharing functionality.
+ * 
+ * @remarks
+ * This component displays wine recommendations for a given MBTI type. It allows users to share the recommendations
+ * via email, SMS, or manually through other platforms. It also provides functionality to retry the recommendation test.
+ * 
+ * @param props - The props for the WineCard component.
+ * @param props.answers - A dictionary of question IDs and boolean answers.
+ * @param props.onTryAgain - Function to reset the recommendation test.
+ * @param props.mbtiResult - The MBTI result string, used to fetch recommendations.
+ */
+
 const WineCard: React.FC<WineCardProps> = ({
   answers,
   onTryAgain,

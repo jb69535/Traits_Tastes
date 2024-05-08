@@ -1,6 +1,19 @@
 // fetchRecommendations.ts
 // Author: Jun Beom
 // Define the type for your answers and recommendations somewhere accessible
+
+
+/**
+ * Fetches wine recommendations based on the given MBTI result.
+ * 
+ * @remarks
+ * Sends a POST request to a backend service with the user's MBTI result to retrieve personalized wine recommendations. The function handles errors and returns an empty array in case of failure.
+ * 
+ * @param mbtiResult - The MBTI result string used to fetch personalized recommendations.
+ * @returns A promise resolving to an array of WineRecommendation objects.
+ * 
+ * @throws {Error} Throws an error if the fetch operation fails.
+ */
 export interface WineRecommendation {
   Title: string;
   imageUrl: string;

@@ -10,6 +10,17 @@ interface ModalProps {
   children?: React.ReactNode; // Define children prop
 }
 
+/**
+ * A generic modal component that can be closed by clicking outside the content area.
+ * 
+ * @remarks
+ * This modal component renders children content with a backdrop and provides functionality to close by clicking outside the content area or on a close button.
+ * 
+ * @param props - The props for the Modal component.
+ * @param props.isOpen - Boolean indicating whether the modal is open or not.
+ * @param props.onClose - Function to call when the modal needs to be closed.
+ * @param props.children - Optional children to render inside the modal.
+ */
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 

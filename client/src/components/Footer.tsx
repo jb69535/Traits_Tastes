@@ -4,6 +4,12 @@
 import React from 'react';
 import '../style/components/footer.css';
 
+/**
+ * Simple footer component displaying copyright information.
+ * 
+ * @remarks
+ * This component renders a footer with copyright text, including the year and author names. It is designed to be used across the application to maintain a consistent footer.
+ */
 const Footer: React.FC = () => {
     return (
         <div>
