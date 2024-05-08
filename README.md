@@ -25,8 +25,16 @@ In the project directory, you can run:
 &emsp; "start:client": "cd client && npm start",\
 &emsp; "start": "npm run build:client && npm run start:server",\
 &emsp; "deploy": "npm run build:client && npm run build:server && npm run start:server"\
-    }
-
+    } \
+### npm example
+```npm example
+npm run install:client
+npm run install:server
+npm run build:client
+npm run build:server
+npm run start:server
+npm run start:client
+```
 Runs the app in the development mode.\
 The page will reload if you make edits.
 
