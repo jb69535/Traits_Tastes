@@ -181,7 +181,7 @@ app.post("/api/recommendations", async (req: Request, res: Response) => {
   }
 
   try {
-    const winePreferences = getWinePreferencesByMBTI(mbti); // Assuming you have a function that maps MBTI to wine preferences
+    const winePreferences = getWinePreferencesByMBTI(mbti); // Get wine preferences based on MBTI
 
     // Construct the SQL query to select wines only from the specified grape preferences
     const placeholders = winePreferences.map(() => "?").join(","); // Generate placeholders
